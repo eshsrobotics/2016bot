@@ -1,0 +1,11 @@
+Programming plan (in priority order)
+1. Create 4 CIM drive train program
+
+  - current drive train is 2 CIMs
+  - All 4 CIMS driven independently
+  - wrap control around user friendly functions (turnLeft(), turnRight(), driveForward(), driveBack())
+  - The idea is that high-level code does not need to know which motors turn on and off.
+  
+2. Encoders
+
+  -encoder on each wheel, tell how far wheels turn, wheels independently spinning
