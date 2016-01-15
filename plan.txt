@@ -3,10 +3,10 @@ Programming plan (in priority order)
 Programming team members:
   - Margaret [team lead] (mknoblock?)
   - Ari
-  - Quinn (qgilbert-18)
+  - Quinn Gilbert (qgilbert-18)
   - Annika
   - Christian
-  - Adrian
+  - Adrian Osorio (adrianosorio)
 Reserve team members:
   - Michael (no GitHub yet)
   - Angel (amadrid-16)
@@ -19,32 +19,32 @@ STATUS, 2016-01-13: Added all team members to eshsrobotics group.  Commit access
 
   - The current test bed drive train uses 2 CIMs to drive 6 wheels.
   - The desired drive train will use 4 CIMS, all driven independently.
-  - Wrap control of the drive train motors around user-friendly functions (turnLeft(), 
+  - Wrap control of the drive train motors around user-friendly functions (turnLeft(),
     turnRight(), driveForward(), driveBack().)
   - The idea is that high-level code does not need to know which motors turn on and off.  That way,
     if the ports change, we only have to make the change in ONE place: the user-friendly functions.
-  
+
 2. Encoders
 
   - We will be putting an encoder on each wheel.
   - Write a function that uses the encoder input to determine how far a given wheel has moved.
   - Write a function to tell if a given wheel is not making complete contact with the ground.
-  
+
 3. Front-wheel drive (FWD) vs. rear-wheel drive (RWD):
 
   - One of two ideas for climbing ramps:
     1. Switch between FWD and RWD with a single switch.  Drivers use the switch as needed to climb ramps.
-	2. Use the encoder functions.  Automatically set the flag to switch to RWD (how?) if front wheels are spinning too much
-	
+        2. Use the encoder functions.  Automatically set the flag to switch to RWD (how?) if front wheels are spinning too much
+
 4. Orient robot automatically using two light sensors below the front of the robot
 
   - Green lines right before tower shooting area; this could be used to make sure the bot is parallel
-  
+
 5. Reflector shooter
 
   - Reflective tape on the top of the board
   - Use camera to orient shooter.
-  
+
 6. Virtual 2D map of field
 
   - Might prove challenging.
