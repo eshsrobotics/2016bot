@@ -1,17 +1,17 @@
 Programming plan (in priority order)
 
 Programming team members:
-  - Margaret [team lead] (mknoblock?)
-  - Ari
-  - Quinn Gilbert (qgilbert-18)
-  - Annika
-  - Christian
-  - Adrian Osorio (adrianosorio)
+  - Margaret Knoblock [team lead] (mknoblock | mknoblock_16@esusdstudents.org)
+  - Ari Berkowicz (? | aberkowicz_17@esusdstudents.org)
+  - Quinn Gilbert (qgilbert-18 | qgilbert_18@esusdstudents.org)
+  - Annika Hatcher (? | ahatcher_18@esusdstudents.org)
+  - Christian Herr (? | cherr_16@esusdstudents.org)
+  - Adrian Osorio (adrianosorio | aosorio_17@esusdstudents.org)
 Reserve team members:
-  - Michael (no GitHub yet)
-  - Angel (amadrid-16)
-Programming mentor:
-  - Uche Akotaobi [Xerox] (uakotaobi)
+  - Michael Leahy (no GitHub yet | mleahy_18@esusdstudents.org)
+  - Angel (amadrid-16 | amadrid_16@esusdstudents.org)
+Programming mentors:
+  - Uche Akotaobi (uakotaobi | Uche.Akotaobi@xerox.com)
 
 STATUS, 2016-01-13: Added all team members to eshsrobotics group.  Commit access confirmed for qgilbert-18.
 
