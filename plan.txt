@@ -39,11 +39,18 @@ STATUS, 2016-01-13: Added all team members to eshsrobotics group.  Commit access
 4. Orient robot automatically using two light sensors below the front of the robot
 
   - Green lines right before tower shooting area; this could be used to make sure the bot is parallel
+  -Might be useful to get two rgb light sensors
 
 5. Reflector shooter
 
   - Reflective tape on the top of the board
   - Use camera to orient shooter.
+  Program:
+  	-OpeCV
+            -Solvepnp
+  	-FFMPEG
+   Thinking about using a raspberry pi to take a regular camera and processing the camera's pictures and live feed. That will send to us. 
+   Use an arduino to reduce the data to us.
 
 6. Virtual 2D map of field
 
