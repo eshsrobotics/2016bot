@@ -19,6 +19,11 @@ STATUS
     2016-01-30: 
       Plan in flux.  Ari and Adrian working on camera; Margaret has some unpushed code on Michael's
       tablet.
+    2016-02-03:
+      Reimplemented robot class to inherit from appropriate base class and put new talon controller 
+      into the code. The wrong robot project type with the correct motor controller code is on github 
+      and titled 2016bot. The right robot project type with this code will be up soon and the old incorrect
+      one will be taken off for minimal confusion. Ari and Adrian still working on camera code.3
       
 1. Create 4-CIM drive train program
 
