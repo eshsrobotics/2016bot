@@ -133,7 +133,17 @@ STATUS
 9. Virtual 2D map of field
 
   - Might prove challenging.
-  
+
+
+DOCUMENTATION
+
+	The API reference for the whole WPILib:
+	
+		http://first.wpi.edu/FRC/roborio/release/docs/java/  
+		
+	Adrian's notes on setting up the router and Talons:
+	
+		https://drive.google.com/drive/folders/0B4bF77-ODGFFQlgzTjdycEkwRzA
   
 CONFIGURATION
 1. Useful Git config settings:
