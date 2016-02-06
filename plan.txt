@@ -150,7 +150,14 @@ CONFIGURATION
 1. Useful Git config settings:
 
    git config user.name YourUserName
-
    git config user.email YourEmail@Address.com
 
+   [This command allows you to do free-form commits with Notepad++ if it's
+   installed in the right folder.  Feel free to modify the path.]
+
    git config --global core.editor "'C:/Users/frc1/Documents/Notepad++Portable/Notepad++Portable.exe' -multiInst -notabbar -nosession -noPlugin"
+
+   [This command defines a command, "git ll", which is more useful than the
+   normal "git log" command.]
+
+   git config alias.ll '!git log --graph --decorate --color --stat | git name-rev --stdin --refs=refs/heads/master | less -r'
