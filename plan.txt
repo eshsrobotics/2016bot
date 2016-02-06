@@ -9,30 +9,30 @@ Programming team members:
   - Adrian Osorio (adrianosorio | aosorio_17@esusdstudents.org and adrianosorio101@gmail.com)
 Reserve team members:
   - Michael Leahy (no GitHub yet | mleahy_18@esusdstudents.org)
-  - Angel (amadrid-16 | amadrid_16@esusdstudents.org)
+  - Angel Madrid (amadrid-16 | amadrid_16@esusdstudents.org)
 Programming mentors:
   - Uche Akotaobi (uakotaobi | Uche.Akotaobi@xerox.com)
 
 STATUS
-    2016-01-13: 
+    2016-01-13:
       Added all team members to eshsrobotics group.  Commit access confirmed for qgilbert-18.
-    2016-01-30: 
+    2016-01-30:
       Plan in flux.  Ari and Adrian working on camera; Margaret has some unpushed code on Michael's
       tablet.
     2016-02-03:
-      Reimplemented robot class to inherit from appropriate base class and put new talon controller 
-      into the code. The wrong robot project type with the correct motor controller code is on github 
+      Reimplemented robot class to inherit from appropriate base class and put new talon controller
+      into the code. The wrong robot project type with the correct motor controller code is on github
       and titled 2016bot. The right robot project type with this code will be up soon and the old incorrect
       one will be taken off for minimal confusion. Ari and Adrian still working on camera code.3
-      
+
 1. Create 4-CIM drive train program
 
-   - The old test bed drive train used 2 CIMs to drive 6 wheels.  (As of 2016-01-30, it no longer 
+   - The old test bed drive train used 2 CIMs to drive 6 wheels.  (As of 2016-01-30, it no longer
      exists.)
    - The desired drive train will use 4 CIMS to drive two gearboxes.
-     * A pair of CIMs will be connected to each gearbox. 
-     * The output of the gearbox will be connected, via chains, to both wheels on that side of the  
-       robot. 
+     * A pair of CIMs will be connected to each gearbox.
+     * The output of the gearbox will be connected, via chains, to both wheels on that side of the
+       robot.
      * An encoder will be attached to the output of each gearbox; its output will be available to
        the software.
    - Wrap control of the drive train motors around user-friendly functions (turnLeft(),
@@ -43,21 +43,21 @@ STATUS
 2. Write code to shift between low and high gear
 
    - As of 2016-01-27, the plan now is to allow the robot to manually shift into low gear and high
-     gear.  Low gear will be used for driving up steep inclines (monster-truck-style, given the 
+     gear.  Low gear will be used for driving up steep inclines (monster-truck-style, given the
      height of the robot's wheels.)
      * Ostensibly the shifting can eventually be made automatic.
-     
+
    - The gearboxes that are on the robot now are NOT the gearboxes the final robot will use.
      * The final gearboxes are stock Super Shifters, as can be seen here:
-     
+
        http://www.andymark.com/product-p/am-superoptions.htm
-       
+
      * Servos not included.
        - The gearboxes can use standard servos.
-       - The back room of the robotics lab has plenty of spare servos; I'm holding two Hitec 
+       - The back room of the robotics lab has plenty of spare servos; I'm holding two Hitec
          HS-322HD servos in my hand as I type this.
-       - Michael has even more servos at home.       
-       
+       - Michael has even more servos at home.
+
    - The servos will plug directly into the cortex rather than being wired to the motor controller.
      * A web search for "wpilib servo" gives the following example of how to write code for them:
        http://wpilib.screenstepslive.com/s/3120/m/7912/l/132341-repeatable-low-power-movement-controlling-servos-with-wpilib
@@ -70,24 +70,24 @@ STATUS
    - A single boolean switch needs to be able to turn this on and off.  Write an easy-to-call
      function to do this.
       * This should be really easy.
-       
+
 4. Write code to drive the shooting mechanism
 
-   - The shooter wil be control by two motors: one to drive the vertical axis 
+   - The shooter wil be control by two motors: one to drive the vertical axis
      clockwise/counterclockwise and one to turn the turn flywheel.
    - Write turnCannonLeft(theta) and turnCannonRight(theta) functions that can rotate the cannon by
      the given angle.
    - Write setLaunchSpeed(f) function that can set the flywheel launch speed to a given percentage
      (0.0 = off, 1.0 = maximum speed.)
-       
-       
+
+
 5. Write code to drive the linear actuators for the hook mechanism
    - As of 2016-01-30, the tower-climbing scheme has been revised.
      * The robot will now be employing a pair of linear actuators to drive a pair of struts.
        - The struts themselves have some telescoping ability so they can stretch further than their
          initial extent.
        - The hinge of the struts is at the top rear of the robot.
-       - In neutral position, the struts rest at an angle going from the top to the bottom of the 
+       - In neutral position, the struts rest at an angle going from the top to the bottom of the
          robot.  The linear actuators are fully retracted, and the struts are not extended.
        - When the actuators active, they will stretch out, pushing the struts upward so they lift
          over the top of the robot and hook into the tower bars.  The struts will also extend out
@@ -98,43 +98,39 @@ STATUS
            strut hooks alone.
     - Clearly we will need to send a signal to the linear actuators.  What's not clear is how we'll
       be driving the struts themselves to extend or contract.
-   
-6. Write code to extract information from the encoders
 
-   - We will have two encoders for the drive: one for the left gearbox and one for the right gearbox.
-   - Write a function that uses the encoder input to determine how many rotations the wheels have
-     made on the left side and right side.
-     * This information could be useful during autonomous mode, and for automatic gear shifting.
-
-<<<<<<< HEAD
-  - Green lines right before tower shooting area; this could be used to make sure the bot is parallel
-  -Might be useful to get two rgb light sensors
-
-5. Reflector shooter
-
-  - Reflective tape on the top of the board
-  - Use camera to orient shooter.
-  Program:
-  	-OpeCV
-            -Solvepnp
-  	-FFMPEG
-   Thinking about using a raspberry pi to take a regular camera and processing the camera's pictures and live feed. That will send to us. 
-   Use an arduino to reduce the data to us.
-=======
-7. Reflector shooter
+6. Reflector shooter
 
   - There is reflective tape on the top of the tower.
   - Use camera to orient shooter by detecting these spots.
     * Clearly there are camera models out there with the impressive ability to orient themselves and
       auto-track; how do we feed that information back into our code?
   - David, Ari, and Adrian were working on this as of 2016-01-30.
-  
+    * Program:
+
+      - OpenCV
+        * Contains a Solvepnp() function -- David succinctly described what it
+          did on 2016-02-03, but I forget.  Remind us.
+      - FFMPEG
+        * I (Uche) know a thing or two about FFMPEG--state your need!
+
+    * Thinking about using a raspberry pi to take a regular camera and
+      processing the camera's pictures and live feed.  That will send to us.
+      - Use an arduino to reduce the data to us.
+
+7. Write code to extract information from the encoders
+
+   - We will have two encoders for the drive: one for the left gearbox and one for the right gearbox.
+   - Write a function that uses the encoder input to determine how many rotations the wheels have
+     made on the left side and right side.
+     * This information could be useful during autonomous mode, and for automatic gear shifting.
+
 8. Orient robot automatically using two light sensors below the front of the robot
->>>>>>> origin/master
 
   - Green lines right before tower shooting area; this could be used to make sure the bot is parallel
+    * Might be useful to get two rgb light sensors
   - Deprioritized on 2016-01-30, but we're keeping it around just in case.
-  
+
 9. Virtual 2D map of field
 
   - Might prove challenging.
@@ -142,19 +138,19 @@ STATUS
 
 DOCUMENTATION
 
-	The API reference for the whole WPILib:
-	
-		http://first.wpi.edu/FRC/roborio/release/docs/java/  
-		
-	Adrian's notes on setting up the router and Talons:
-	
-		https://drive.google.com/drive/folders/0B4bF77-ODGFFQlgzTjdycEkwRzA
-  
+        The API reference for the whole WPILib:
+
+                http://first.wpi.edu/FRC/roborio/release/docs/java/
+
+        Adrian's notes on setting up the router and Talons:
+
+                https://drive.google.com/drive/folders/0B4bF77-ODGFFQlgzTjdycEkwRzA
+
 CONFIGURATION
 1. Useful Git config settings:
 
    git config user.name YourUserName
-   
+
    git config user.email YourEmail@Address.com
-   
+
    git config --global core.editor "'C:/Users/frc1/Documents/Notepad++Portable/Notepad++Portable.exe' -multiInst -notabbar -nosession -noPlugin"
