@@ -1,0 +1,19 @@
+package org.usfirst.frc.team1759.robot;
+import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Joystick;
+public class Launcher {
+	private Talon loadTalon, shootTalon1, shootTalon2;
+	public Launcher(int loadTalonPort, int shootTalonPort1, int shootTalonPort2){
+		loadTalon = new Talon(loadTalonPort);
+		shootTalon1 = new Talon(shootTalonPort1);
+		shootTalon2 = new Talon(shootTalonPort2);
+	}
+	public void load(){
+	//look at arm code on git for reference	
+	}
+	public void shoot(Joystick leftStick, Joystick rightStick){
+		shootTalon1.set(leftStick.getThrottle());
+		shootTalon2.set(rightStick.getThrottle());
+	}
+
+}

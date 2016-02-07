@@ -24,6 +24,7 @@ public class Robot extends IterativeRobot {
     SendableChooser chooser;
 	
     RobotDrive myRobot;
+    Launcher launcher;
     Joystick leftStick;
     Joystick rightStick;
     CANTalon canTalon0;
@@ -45,7 +46,9 @@ public class Robot extends IterativeRobot {
     	canTalon1 = new CANTalon(1);
     	canTalon2 = new CANTalon(2);
     	canTalon3 = new CANTalon(3);
+    	//fl,bl,fr,br
         myRobot = new RobotDrive(canTalon0, canTalon1, canTalon2, canTalon3);
+        launcher = new Launcher(0,1);
         leftStick = new Joystick(0);
         rightStick = new Joystick(1);
     }
@@ -84,7 +87,8 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-    	myRobot.tankDrive(leftStick, rightStick);
+    	myRobot.tankDrive(leftStick, rightStick); //left side is inverted, goes backwards when y is pushed forwards
+    	launcher.shoot(leftStick, rightStick);
     }
     
     /**
@@ -95,3 +99,25 @@ public class Robot extends IterativeRobot {
     }
     
 }
+
+/* stuff to work on:
+ * - simple camera code (for michael)
+ * - loader code
+ * - shooting code (2 speeds... or more)
+ * - shifting code if necessary
+ * 
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+

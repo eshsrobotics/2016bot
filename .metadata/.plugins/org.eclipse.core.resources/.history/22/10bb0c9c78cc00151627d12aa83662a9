@@ -1,0 +1,10 @@
+package org.usfirst.frc.team1759.robot;
+
+public class Shoot {
+	public load(){
+		
+	}
+	public launch(){
+		
+	}
+}

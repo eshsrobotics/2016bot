@@ -1,0 +1,16 @@
+package org.usfirst.frc.team1759.robot;
+import edu.wpi.first.wpilibj.Talon;
+public class Launcher {
+	private Talon loadTalon, shootTalon;
+	public Launcher(int loadTalonPort, int shootTalonPort){
+		loadTalon = new Talon(loadTalonPort);
+		shootTalon = new Talon(shootTalonPort);
+	}
+	public void load(){
+	//look at arm code on git for reference	
+	}
+	public void shoot(){
+		
+	}
+
+}
