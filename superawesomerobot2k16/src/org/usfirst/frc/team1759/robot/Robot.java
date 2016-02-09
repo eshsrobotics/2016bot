@@ -42,10 +42,13 @@ public class Robot extends IterativeRobot {
         chooser.addObject("My Auto", customAuto);
         SmartDashboard.putData("Auto choices", chooser);
         
-        canTalon0 = new CANTalon(0);
-    	canTalon1 = new CANTalon(1);
+        canTalon0 = new CANTalon(0); //output for this talon is reversed, wire to motor backwards
+    	canTalon1 = new CANTalon(1); //output for this talon is reversed, wire to motor backwards
     	canTalon2 = new CANTalon(2);
     	canTalon3 = new CANTalon(3);
+    	
+    	canTalon0.setInverted(true);
+    	canTalon1.setInverted(true);
     	//fl,bl,fr,br
         myRobot = new RobotDrive(canTalon0, canTalon1, canTalon2, canTalon3);
         launcher = new Launcher(0,1);
