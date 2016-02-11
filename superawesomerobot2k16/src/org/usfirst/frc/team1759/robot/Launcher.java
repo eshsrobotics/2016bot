@@ -13,10 +13,10 @@ public class Launcher {
 	}
 	public void shoot(Joystick leftStick, Joystick rightStick){ //returning values between -0.5 and 0.5
 		shootTalon1.set((leftStick.getThrottle()/2.0)+0.5);//this makes so values between -1 and 1 become values between 0 and 1
-		System.out.println("talon1 val (ls): " + (leftStick.getThrottle()/2.0)+0.5);//check to actually make sure dividing by 0.5
+		System.out.println("talon1 val (ls): " + ((leftStick.getThrottle()/2.0)+0.5));//check to actually make sure dividing by 0.5
 		
-		shootTalon2.set((rightStick.getThrottle()/2.0)+0.5); //returning values between -0.5 and 0.5
-		System.out.println("talon2 val (rs): " + (rightStick.getThrottle()/2.0)+0.5); //did not print, need to figure out how to print to see throttle values
+		shootTalon2.set(((rightStick.getThrottle()/2.0)+0.5)*-1.0); //returning values between -0.5 and 0.5
+		System.out.println("talon2 val (rs): " + (((rightStick.getThrottle()/2.0)+0.5)*-1.0)); //did not print, need to figure out how to print to see throttle values
 	}
 
 }
