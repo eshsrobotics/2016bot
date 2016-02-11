@@ -24,17 +24,18 @@ STATUS
       into the code. The wrong robot project type with the correct motor controller code is on github
       and titled 2016bot. The right robot project type with this code will be up soon and the old incorrect
       one will be taken off for minimal confusion. Ari and Adrian still working on camera code.3
+    2016-02-10:
+      New robot class up and running (and even on git!). This class has the tank drive code for the new
+      CANTalon motor controllers. Also have added a launching class with launching and loading methods,
+      Preliminary launching code has been written and tested (but not with motors yet, waiting on build team
+      to finish launcher). Ari and Adrian working with PIXY camera.
 
 1. Create 4-CIM drive train program
 
-   - The old test bed drive train used 2 CIMs to drive 6 wheels.  (As of 2016-01-30, it no longer
-     exists.)
-   - The desired drive train will use 4 CIMS to drive two gearboxes.
-     * A pair of CIMs will be connected to each gearbox.
-     * The output of the gearbox will be connected, via chains, to both wheels on that side of the
-       robot.
-     * An encoder will be attached to the output of each gearbox; its output will be available to
-       the software.
+   - As of 2016-02-10 we have final test bed built and driving with four CIMS and two gearboxes. (Controlled by new CANTalon 
+     motor controllers)
+   - May be adding a shifting gearbox (depending on time constraints). If we add this we will need to have 
+     a program to shift a servo which will shift the gearbox between multiple speeds (explained more in pt 2)
    - Wrap control of the drive train motors around user-friendly functions (turnLeft(),
      turnRight(), driveForward(), driveBack().)
    - The idea is that high-level code does not need to know which motors turn on and off.  That way,
