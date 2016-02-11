@@ -158,6 +158,7 @@ CONFIGURATION
    git config --global core.editor "'C:/Users/frc1/Documents/Notepad++Portable/Notepad++Portable.exe' -multiInst -notabbar -nosession -noPlugin"
 
    [This command defines a command, "git ll", which is more useful than the
-   normal "git log" command.]
+   normal "git log" command, and then a short version, "git l".]
 
    git config alias.ll '!git log --graph --decorate --color --stat | git name-rev --stdin --refs=refs/heads/master | less -r'
+   git config alias.l '!git log --graph --decorate --pretty="format:%Cred%h %C(3)%ai %Cblue%an <%ae> %Cgreen%s" | git name-rev --stdin --refs=refs/heads/master | less -r'
