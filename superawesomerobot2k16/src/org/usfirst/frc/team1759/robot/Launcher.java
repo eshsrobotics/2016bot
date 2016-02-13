@@ -2,21 +2,27 @@ package org.usfirst.frc.team1759.robot;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Joystick;
 public class Launcher {
-	private Talon shootTalon1, shootTalon2; //loadTalon
-	public Launcher(int shootTalonPort1, int shootTalonPort2){ //int loadTalon
-		//loadTalon = new Talon(loadTalonPort);
-		shootTalon1 = new Talon(shootTalonPort1);
-		shootTalon2 = new Talon(shootTalonPort2);
+	private Talon loadTalon, lowerShootTalon, upperShootTalon; 
+	public Launcher(int loadTalonPort, int lowerShootTalonPort, int upperShootTalonPort){
+		loadTalon = new Talon(loadTalonPort);
+		lowerShootTalon = new Talon(lowerShootTalonPort);
+		upperShootTalon = new Talon(upperShootTalonPort);
 	}
-	public void load(){//not in use yet
-	//look at arm code on git for reference	
+	public void load(Joystick joystick, double loadingSpeed){ //have not tested this method yet (as of 2/13)
+		if (joystick.getRawButton(5)) //runs loading talon forwards with button 5
+		    loadTalon.set(loadingSpeed);
+		else if (joystick.getRawButton(3)) //runs loading talon backwards with button 3
+			loadTalon.set((loadingSpeed*-1.0));
+		System.out.print("load talon val -- " + (loadTalon.get())); //prints loading talon value for testing purposes
 	}
-	public void shoot(Joystick leftStick, Joystick rightStick){ //returning values between -0.5 and 0.5
-		shootTalon1.set((leftStick.getThrottle()/2.0)+0.5);//this makes so values between -1 and 1 become values between 0 and 1
-		System.out.println("talon1 val (ls): " + ((leftStick.getThrottle()/2.0)+0.5));//check to actually make sure dividing by 0.5
+	public void shoot(Joystick leftStick, Joystick rightStick){ 
+		//spins normally
+		lowerShootTalon.set((leftStick.getThrottle()/2.0)+0.5);//this makes so values between -1 and 1 become values between 0 and 1 (for lower shooting wheel)
+		System.out.println("lower talon val (ls): " + ((leftStick.getThrottle()/2.0)+0.5)); //prints lower talon value for testing purposes
 		
-		shootTalon2.set(((rightStick.getThrottle()/2.0)+0.5)*-1.0); //returning values between -0.5 and 0.5
-		System.out.println("talon2 val (rs): " + (((rightStick.getThrottle()/2.0)+0.5)*-1.0)); //did not print, need to figure out how to print to see throttle values
+		//spins in reverse to shoot ball
+		upperShootTalon.set(((rightStick.getThrottle()/2.0)+0.5)*-1.0); //makes it so upper shooting wheel spins at values between 0 and -1
+		System.out.println("upper talon val (rs): " + (((rightStick.getThrottle()/2.0)+0.5)*-1.0)); //prints upper talon value for
 	}
 
 }

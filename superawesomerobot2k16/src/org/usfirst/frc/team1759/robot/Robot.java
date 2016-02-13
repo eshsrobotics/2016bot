@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.Servo;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -31,7 +32,7 @@ public class Robot extends IterativeRobot {
     CANTalon canTalon1;
     CANTalon canTalon2;
     CANTalon canTalon3;
-    
+    Servo testServo;    
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -42,18 +43,22 @@ public class Robot extends IterativeRobot {
         chooser.addObject("My Auto", customAuto);
         SmartDashboard.putData("Auto choices", chooser);
         
-        canTalon0 = new CANTalon(0); //output for this talon is reversed, wire to motor backwards
-    	canTalon1 = new CANTalon(1); //output for this talon is reversed, wire to motor backwards
+        canTalon0 = new CANTalon(0); 
+    	canTalon1 = new CANTalon(1);
     	canTalon2 = new CANTalon(2);
     	canTalon3 = new CANTalon(3);
     	
+    	//output for talons 0-1 were reverse so this inverts them
     	canTalon0.setInverted(true);
     	canTalon1.setInverted(true);
+    	
     	//fl,bl,fr,br
         myRobot = new RobotDrive(canTalon0, canTalon1, canTalon2, canTalon3);
-        launcher = new Launcher(0,1);
+        //load talon port, lower shoot talon port, upper shoot talon port
+        launcher = new Launcher(2,0,1);
         leftStick = new Joystick(0);
         rightStick = new Joystick(1);
+        testServo = new Servo(2); //for testing
     }
     
 	/**
@@ -90,8 +95,10 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-    	myRobot.tankDrive(leftStick, rightStick); //left side is inverted, goes backwards when y is pushed forwards
-    	launcher.shoot(leftStick, rightStick);
+    	myRobot.tankDrive(leftStick, rightStick); //two joystick tank drive system
+    	launcher.shoot(leftStick, rightStick); //uses throttle on both joysticks to control shooting system
+    	launcher.load(rightStick, 0.8); //uses buttons 5 and 3 on right joystick to run loading motor
+    	//testServo.set(((leftStick.getThrottle()/2.0)+0.5)); //for testing
     }
     
     /**
@@ -109,6 +116,9 @@ public class Robot extends IterativeRobot {
  * - shooting code (2 speeds... or more)
  * - shifting code if necessary
  * 
+ * -- commit to git
+ * -- add motor controller for loading
+ * -- test loading and shooting
  */
 
 
