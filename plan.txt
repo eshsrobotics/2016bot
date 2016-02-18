@@ -29,6 +29,17 @@ STATUS
       CANTalon motor controllers. Also have added a launching class with launching and loading methods,
       Preliminary launching code has been written and tested (but not with motors yet, waiting on build team
       to finish launcher). Ari and Adrian working with PIXY camera.
+	2016-02-17:
+	  - According to Michael, the camera can be mounted fixed on top of the shooter.  (We didn't know this.)
+	  - Tasks for computer vision side project:
+	    * Get OpenCV project loaded and running on the RoboRIO [7/10 difficulty]
+		* Download the appropriate OpenCV dependencies and check them into 2016bot\TestBedProgram\TestBedProgramm\ [Easy]
+		* Configure the USB camera by adding a ring of lights around the lens
+		* Sample images location: https://usfirst.collab.net/sf/frs/do/listReleases/projects.wpilib/frs.2016_field_images [does not load]
+		  * We need to add sample field images to the repo to exercise the OpenCV code.
+		* Uche to look into OpenCV, too [10/10 difficulty]
+		* WPILib has a Maven repo (four, actually.)  The question is not whether _that_ works.  The question is whether
+		  it will work from the ESHS school network.
 
 1. Create 4-CIM drive train program
 
