@@ -161,4 +161,4 @@ CONFIGURATION
    [This command defines a command, "git ll", which is more useful than the
    normal "git log" command.]
 
-   git config alias.ll '!git log --graph --decorate --color --stat | git name-rev --stdin --refs=refs/heads/master | less -r'
+   git config alias.ll "!git log --graph --decorate --color --stat | git name-rev --stdin --refs=refs/heads/master | less -r"
