@@ -13,6 +13,8 @@ public class Launcher {
 		    loadTalon.set(loadingSpeed);
 		else if (joystick.getRawButton(3)) //runs loading talon backwards with button 3
 			loadTalon.set((loadingSpeed*-1.0));
+		else
+			loadTalon.set(0.0);
 		System.out.print("load talon val -- " + (loadTalon.get())); //prints loading talon value for testing purposes
 	}
 	public void shoot(Joystick leftStick, Joystick rightStick){ 

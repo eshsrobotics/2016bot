@@ -41,7 +41,7 @@ public class Robot extends IterativeRobot {
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", defaultAuto);
         chooser.addObject("My Auto", customAuto);
-        SmartDashboard.putData("Auto choices", chooser);
+        SmartDashboard.putData("Auto choices", chooser);												
         
         canTalon0 = new CANTalon(0); 
     	canTalon1 = new CANTalon(1);
@@ -58,7 +58,7 @@ public class Robot extends IterativeRobot {
         launcher = new Launcher(2,0,1);
         leftStick = new Joystick(0);
         rightStick = new Joystick(1);
-        testServo = new Servo(2); //for testing
+//        testServo = new Servo(2); //for testing
     }
     
 	/**
@@ -97,7 +97,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
     	myRobot.tankDrive(leftStick, rightStick); //two joystick tank drive system
     	launcher.shoot(leftStick, rightStick); //uses throttle on both joysticks to control shooting system
-    	launcher.load(rightStick, 0.8); //uses buttons 5 and 3 on right joystick to run loading motor
+    	launcher.load(rightStick, 0.5); //uses buttons 5 and 3 on right joystick to run loading motor
     	//testServo.set(((leftStick.getThrottle()/2.0)+0.5)); //for testing
     }
     
