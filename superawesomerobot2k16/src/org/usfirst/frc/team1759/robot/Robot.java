@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Servo;
 
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -26,13 +28,16 @@ public class Robot extends IterativeRobot {
 	
     RobotDrive myRobot;
     Launcher launcher;
+    Climber climber;
     Joystick leftStick;
     Joystick rightStick;
     CANTalon canTalon0;
     CANTalon canTalon1;
     CANTalon canTalon2;
     CANTalon canTalon3;
-    Servo testServo;    
+    Servo testServo;  
+    
+    AnalogPotentiometer pot;
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -51,6 +56,8 @@ public class Robot extends IterativeRobot {
     	//output for talons 0-1 were reverse so this inverts them
     	canTalon0.setInverted(true);
     	canTalon1.setInverted(true);
+    	canTalon2.setInverted(true);
+    	canTalon3.setInverted(true);
     	
     	//fl,bl,fr,br
         myRobot = new RobotDrive(canTalon0, canTalon1, canTalon2, canTalon3);
@@ -58,7 +65,10 @@ public class Robot extends IterativeRobot {
         launcher = new Launcher(2,0,1);
         leftStick = new Joystick(0);
         rightStick = new Joystick(1);
-//        testServo = new Servo(2); //for testing
+        //talonPortActuator1,talonPortActuator2,actuator1PotentiometerPort,actuator2PotentiometerPort
+        climber = new Climber(0,1,2,3);
+        
+        pot = new AnalogPotentiometer(3);
     }
     
 	/**
@@ -97,8 +107,9 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
     	myRobot.tankDrive(leftStick, rightStick); //two joystick tank drive system
     	launcher.shoot(leftStick, rightStick); //uses throttle on both joysticks to control shooting system
-    	launcher.load(rightStick, 0.5); //uses buttons 5 and 3 on right joystick to run loading motor
-    	//testServo.set(((leftStick.getThrottle()/2.0)+0.5)); //for testing
+    	launcher.load(rightStick, 1.0); //uses buttons 5 and 3 on right joystick to run loading motor
+    	System.out.println("POT " + (pot.get()));
+    	//climber.climb(all dese values);
     }
     
     /**
@@ -111,7 +122,10 @@ public class Robot extends IterativeRobot {
 }
 
 /* stuff to work on:
- * - simple camera code (for michael)
+ *- potentiometer shit
+ *- actuator thingy thing
+ *- lazy susan turning thing
+ *- gear shifting
  * - loader code
  * - shooting code (2 speeds... or more)
  * - shifting code if necessary

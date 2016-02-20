@@ -15,16 +15,14 @@ public class Launcher {
 			loadTalon.set((loadingSpeed*-1.0));
 		else
 			loadTalon.set(0.0);
-		System.out.print("load talon val -- " + (loadTalon.get())); //prints loading talon value for testing purposes
+		//System.out.print("load talon val -- " + (loadTalon.get())); //prints loading talon value for testing purposes
 	}
 	public void shoot(Joystick leftStick, Joystick rightStick){ 
-		//spins normally
-		lowerShootTalon.set((leftStick.getThrottle()/2.0)+0.5);//this makes so values between -1 and 1 become values between 0 and 1 (for lower shooting wheel)
-		System.out.println("lower talon val (ls): " + ((leftStick.getThrottle()/2.0)+0.5)); //prints lower talon value for testing purposes
+		lowerShootTalon.set(((leftStick.getThrottle()/2.0)+0.5)*-1.0);//this makes so values between -1 and 1 become values between 0 and 1 (for lower shooting wheel)
+		//System.out.println("lower talon val (ls): " + ((leftStick.getThrottle()/2.0)+0.5)*-1.0); //prints lower talon value for testing purposes
 		
-		//spins in reverse to shoot ball
-		upperShootTalon.set(((rightStick.getThrottle()/2.0)+0.5)*-1.0); //makes it so upper shooting wheel spins at values between 0 and -1
-		System.out.println("upper talon val (rs): " + (((rightStick.getThrottle()/2.0)+0.5)*-1.0)); //prints upper talon value for
+		upperShootTalon.set(((rightStick.getThrottle()/2.0)+0.5)); //makes it so upper shooting wheel spins at values between 0 and -1
+		//System.out.println("upper talon val (rs): " + ((rightStick.getThrottle()/2.0)+0.5)); //prints upper talon value for
 	}
 
 }
