@@ -1,25 +1,36 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.InputStream;
+
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import org.opencv.core.*;
-import org.opencv.highgui.VideoCapture;        
+import org.opencv.highgui.Highgui;        
+import org.opencv.highgui.VideoCapture;   
+import javax.swing.Timer;
 
-public class Test extends JPanel{
+public class JPanelOpenCV extends JPanel{
 
     BufferedImage image;
 
     public static void main (String args[]) throws InterruptedException{
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+        int a = 1;
+        while(true){
+        	
 
-        Test t = new Test();
-        VideoCapture camera = new VideoCapture(1);
+        JPanelOpenCV t = new JPanelOpenCV();
+        VideoCapture camera = new VideoCapture(0);
 
         Mat frame = new Mat();
         camera.read(frame); 
@@ -39,30 +50,32 @@ public class Test extends JPanel{
                     t.window(t.grayscale(image), "Processed Image", 40, 60);
 
                     //t.window(t.loadImage("ImageName"), "Image loaded", 0, 0);
-
+                    
+                    saveImage(image, a);
+                    a++;
                     break;
                 }
             }   
         }
         camera.release();
     }
-
+}
     @Override
     public void paint(Graphics g) {
         g.drawImage(image, 0, 0, this);
     }
 
-    public Test() {
+    public JPanelOpenCV() {
     }
 
-    public Test(BufferedImage img) {
+    public JPanelOpenCV(BufferedImage img) {
         image = img;
     }   
 
     //Show image on window
     public void window(BufferedImage img, String text, int x, int y) {
         JFrame frame0 = new JFrame();
-        frame0.getContentPane().add(new Test(img));
+        frame0.getContentPane().add(new JPanelOpenCV(img));
         frame0.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame0.setTitle(text);
         frame0.setSize(img.getWidth(), img.getHeight() + 30);
@@ -87,10 +100,10 @@ public class Test extends JPanel{
     }
 
     //Save an image
-    public void saveImage(BufferedImage img) {        
+    public static void saveImage(BufferedImage img, int a) {        
         try {
-            File outputfile = new File("Images/new.png");
-            ImageIO.write(img, "png", outputfile);
+            //File outputfile = new File("C:\\Users\\Ari Berkowicz\\Downloads\\PictureTest\\new.PNG");
+            ImageIO.write(img, "PNG", new File ("C:\\Users\\Ari Berkowicz\\Downloads\\PictureTest\\" + a + ".PNG"));
         } catch (Exception e) {
             System.out.println("error");
         }
