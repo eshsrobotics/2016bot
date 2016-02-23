@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team1759.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -40,7 +39,7 @@ public class Robot extends IterativeRobot {
     
     //CameraServer server;
     
-    AnalogPotentiometer pot;
+    //AnalogPotentiometer pot; //for testing purposes
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -61,25 +60,27 @@ public class Robot extends IterativeRobot {
     	canTalon2 = new CANTalon(2);
     	canTalon3 = new CANTalon(3);
     	
-    	//output for talons 0-1 were reverse so this inverts them
+    	//output for talons was reversed so this inverts them
     	canTalon0.setInverted(true);
     	canTalon1.setInverted(true);
     	canTalon2.setInverted(true);
     	canTalon3.setInverted(true);
     	
-    	//fl,bl,fr,br
+    	//front left, back left, front right, back right
         myRobot = new RobotDrive(canTalon0, canTalon1, canTalon2, canTalon3);
+        
         //load talon port (cantalon), lower shoot talon port(normal talon), upper shoot talon port(normal talon)
         launcher = new Launcher(4,0,1);
         leftStick = new Joystick(0);
         rightStick = new Joystick(1);
         shootStick = new Joystick(2);
-        //talonPortActuator1,talonPortActuator2,actuator1PotentiometerPort,actuator2PotentiometerPort
-        climber = new Climber(5);
+        
+        //talonPortActuator1,talonPortActuator2,lowerlimitswitch1port, lowerlimitswitch2port, upperlimitswitch1port, upperlimitswitch2port
+        climber = new Climber(5,6,0,1,2,3);
         
         
         
-        //pot = new AnalogPotentiometer(3);
+        //pot = new AnalogPotentiometer(3); //for testing purposes
     }
     
 	/**
@@ -121,8 +122,7 @@ public class Robot extends IterativeRobot {
     	launcher.load(shootStick, 1.0, 0.5); //uses buttons 5 and 3 on right joystick to run loading motor
     	launcher.turn(shootStick);
     	climber.climb(shootStick);
-    	//System.out.println("POT " + (pot.get()));
-    	//climber.climb(all dese values);
+    	//System.out.println("POT " + (pot.get())); //for testing purposes
     }
     
     /**
@@ -135,17 +135,7 @@ public class Robot extends IterativeRobot {
 }
 
 /* stuff to work on:
- *- potentiometer shit
- *- actuator thingy thing
- *- lazy susan turning thing
- *- gear shifting
- * - loader code
- * - shooting code (2 speeds... or more)
- * - shifting code if necessary
- * 
- * -- commit to git
- * -- add motor controller for loading
- * -- test loading and shooting
+ * - gear shifting
  */
 
 
