@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Servo;
-
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 
 /**
@@ -31,11 +31,14 @@ public class Robot extends IterativeRobot {
     Climber climber;
     Joystick leftStick;
     Joystick rightStick;
+    Joystick shootStick;
     CANTalon canTalon0;
     CANTalon canTalon1;
     CANTalon canTalon2;
     CANTalon canTalon3;
-    Servo testServo;  
+    Servo testServo;
+    
+    //CameraServer server;
     
     AnalogPotentiometer pot;
     /**
@@ -43,6 +46,11 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
+    	//enable the camera
+    	/*server = CameraServer.getInstance();
+        server.setQuality(100);
+        server.startAutomaticCapture("cam0");*/
+    	
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", defaultAuto);
         chooser.addObject("My Auto", customAuto);
@@ -61,14 +69,17 @@ public class Robot extends IterativeRobot {
     	
     	//fl,bl,fr,br
         myRobot = new RobotDrive(canTalon0, canTalon1, canTalon2, canTalon3);
-        //load talon port, lower shoot talon port, upper shoot talon port
-        launcher = new Launcher(2,0,1);
+        //load talon port (cantalon), lower shoot talon port(normal talon), upper shoot talon port(normal talon)
+        launcher = new Launcher(4,0,1);
         leftStick = new Joystick(0);
         rightStick = new Joystick(1);
+        shootStick = new Joystick(2);
         //talonPortActuator1,talonPortActuator2,actuator1PotentiometerPort,actuator2PotentiometerPort
-        climber = new Climber(0,1,2,3);
+        climber = new Climber(5);
         
-        pot = new AnalogPotentiometer(3);
+        
+        
+        //pot = new AnalogPotentiometer(3);
     }
     
 	/**
@@ -106,9 +117,11 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
     	myRobot.tankDrive(leftStick, rightStick); //two joystick tank drive system
-    	launcher.shoot(leftStick, rightStick); //uses throttle on both joysticks to control shooting system
-    	launcher.load(rightStick, 1.0); //uses buttons 5 and 3 on right joystick to run loading motor
-    	System.out.println("POT " + (pot.get()));
+    	launcher.shoot(shootStick); //uses throttle on both joysticks to control shooting system
+    	launcher.load(shootStick, 1.0, 0.5); //uses buttons 5 and 3 on right joystick to run loading motor
+    	launcher.turn(shootStick);
+    	climber.climb(shootStick);
+    	//System.out.println("POT " + (pot.get()));
     	//climber.climb(all dese values);
     }
     
