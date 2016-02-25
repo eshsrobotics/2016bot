@@ -1,7 +1,7 @@
 package org.usfirst.frc.team1759.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Timer;
+//import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -9,8 +9,10 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Servo;
-import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.AnalogPotentiometer;
+//import edu.wpi.first.wpilibj.CameraServer;
+//import edu.wpi.first.wpilibj.AnalogPotentiometer;
+
+import edu.wpi.first.wpilibj.Ultrasonic;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -37,6 +39,7 @@ public class Robot extends IterativeRobot {
     CANTalon canTalon3;
     Servo testServo;
     
+    Ultrasonic ultrasanic;
     //CameraServer server;
     
     //AnalogPotentiometer pot; //for testing purposes
@@ -65,6 +68,8 @@ public class Robot extends IterativeRobot {
     	canTalon1.setInverted(true);
     	canTalon2.setInverted(true);
     	canTalon3.setInverted(true);
+    	
+    	ultrasanic = new Ultrasonic(5,4);
     	
     	//front left, back left, front right, back right
         myRobot = new RobotDrive(canTalon0, canTalon1, canTalon2, canTalon3);
@@ -123,6 +128,7 @@ public class Robot extends IterativeRobot {
     	launcher.turn(shootStick);
     	climber.climb(shootStick);
     	//System.out.println("POT " + (pot.get())); //for testing purposes
+    	System.out.println(ultrasanic.getRangeInches());
     }
     
     /**
@@ -136,6 +142,8 @@ public class Robot extends IterativeRobot {
 
 /* stuff to work on:
  * - gear shifting
+ * - talon sr problemos
+ * - ordering new potentiometers??
  */
 
 
