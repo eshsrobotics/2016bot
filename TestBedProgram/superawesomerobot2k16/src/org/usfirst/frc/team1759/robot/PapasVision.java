@@ -29,7 +29,7 @@ public class PapasVision {
 	final static double REAL_TAPE_HEIGHT = 14; // inches of real tape height
 	final static double IMG_HEIGHT = 480; // pixels of image resolution
 	final static double IMG_WIDTH = 640; // pixels of image resolution
-	final static double CAM_EL_DEG = 30.0;
+	final static double CAM_EL_DEG = 30.0; 
 	final static double CAM_EL_RAD = Math.toRadians(CAM_EL_DEG);
 
 	VideoCapture camera;
