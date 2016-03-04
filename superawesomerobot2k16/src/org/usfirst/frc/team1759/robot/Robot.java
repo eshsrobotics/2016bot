@@ -9,7 +9,10 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Servo;
-//import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.CameraServer;
 //import edu.wpi.first.wpilibj.AnalogPotentiometer;
 
 import edu.wpi.first.wpilibj.Ultrasonic;
@@ -38,6 +41,8 @@ public class Robot extends IterativeRobot {
     CANTalon canTalon2;
     CANTalon canTalon3;
     Servo testServo;
+    
+    CommandGroup autoCom;
     
     Ultrasonic ultrasanic;
     //CameraServer server;
@@ -81,8 +86,9 @@ public class Robot extends IterativeRobot {
         shootStick = new Joystick(2);
         
         //talonPortActuator1,talonPortActuator2,lowerlimitswitch1port, lowerlimitswitch2port, upperlimitswitch1port, upperlimitswitch2port
-        climber = new Climber(5,6,0,1,2,3);
+        climber = new Climber(5,6,0,1);
         
+        autoCom = new AutoCom(myRobot, launcher);
         
         
         //pot = new AnalogPotentiometer(3); //for testing purposes
@@ -101,6 +107,7 @@ public class Robot extends IterativeRobot {
     	autoSelected = (String) chooser.getSelected();
 //		autoSelected = SmartDashboard.getString("Auto Selector", defaultAuto);
 		System.out.println("Auto selected: " + autoSelected);
+		autoCom.start();
     }
 
     /**
@@ -116,6 +123,7 @@ public class Robot extends IterativeRobot {
     	//Put default auto code here
             break;
     	}
+    	Scheduler.getInstance().run();
     }
 
     /**
@@ -141,10 +149,33 @@ public class Robot extends IterativeRobot {
 }
 
 /* stuff to work on:
- * - gear shifting
- * - talon sr problemos
- * - ordering new potentiometers??
+ * - only bottom limit switches
+ * - reimplement potentiometer
+ * - ultrasonic
+ * - change necessary talons to can talons
  */
+
+/*
+ * TO DO FriDAY:
+ * - build bumpers
+ * - paint bumpers
+ * - fix driver station
+ * - put on talons
+ * - change program to accomodate talons
+ * - camera shit
+ * - build turning shooter
+ * - ultrasonic testing/code
+ * 
+ */
+
+/*
+ * TO DO AT COMP:
+ * put on potentiometers
+ * put on camera
+ * remount electronics boards
+ *
+ */
+
 
 
 
