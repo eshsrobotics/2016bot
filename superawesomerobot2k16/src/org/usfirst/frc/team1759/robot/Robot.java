@@ -12,6 +12,10 @@ import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 
+import edu.wpi.first.wpilibj.Ultrasonic;
+
+import java.lang.Thread;
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -36,8 +40,10 @@ public class Robot extends IterativeRobot {
     CANTalon canTalon2;
     CANTalon canTalon3;
     Servo testServo;
-    PapasVision vision;
+
+    Thread cameraThread;
     
+    Ultrasonic ultrasanic;
     //CameraServer server;
     
     //AnalogPotentiometer pot; //for testing purposes
@@ -50,6 +56,10 @@ public class Robot extends IterativeRobot {
     	/*server = CameraServer.getInstance();
         server.setQuality(100);
         server.startAutomaticCapture("cam0");*/
+    	CameraRunnable runnable = new CameraRunnable();
+    	cameraThread = new Thread(runnable);
+    	cameraThread.setName("robot camera thread");
+    	cameraThread.start();
     	
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", defaultAuto);
@@ -132,6 +142,18 @@ public class Robot extends IterativeRobot {
     public void testPeriodic() {
     
     }
+    protected void fianlize() throws Throwable {
+    	try{
+    		
+    	}
+    	catch(Throwable t)
+    	{
+    		throw t;
+    	}
+    	finally{
+    		super.finalize();
+    	}
+	}
     
 }
 
