@@ -2,15 +2,18 @@ package org.usfirst.frc.team1759.robot;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Servo;
 public class Launcher {
 	
 	private CANTalon loadTalon, lowerShootTalon, upperShootTalon;
-	private Victor spinTalon;
+	//private Victor spinTalon; //for using 393 motor
+	private Servo turnServo;
 	public Launcher(int loadTalonPort, int lowerShootTalonPort, int upperShootTalonPort){
 		loadTalon = new CANTalon(loadTalonPort);
 		lowerShootTalon = new CANTalon(lowerShootTalonPort);
 		upperShootTalon = new CANTalon(upperShootTalonPort);
-		spinTalon = new Victor(2);
+		//spinTalon = new Victor(2); //for usng 393 motors
+		turnServo = new Servo(3); //for using servo turning
 	}
 	public void load(Joystick joystick, double loadingSpeed, double halfSpeed){
 		if (joystick.getRawButton(5)){ //runs loading talon forwards with button 5
@@ -63,19 +66,40 @@ public class Launcher {
 		}
 
 	}
+	//method created to get upper and lower bound values of the servo when rotating shooter is attached to robot
+	//with this method we can find the exact degree range the servo has when shooter mounted between the arms
+	public void testTurn(Joystick joyStick){
+		double deg = turnServo.getAngle();
+		if ((joyStick.getPOV()==(0))&&(deg<=120)){ //right on shooter, up on pov, positive servo angle val
+			deg += 1.0;
+		}
+		else if (joyStick.getPOV()==(180)&& (deg>=0)){
+			deg -= 1.0;
+		}
+		turnServo.setAngle(deg);
+		System.out.println("Servo angle is: " + turnServo.getAngle());
+	}
 	
-	public void turn(Joystick joyStick){
-		if (joyStick.getPOV()==(90)){
-			spinTalon.set(1.0);
+	
+	public void turn(Joystick joyStick, double max, double min){
+		//write code here for servo
+		//need test code to see on robot how many degrees of servo we have to work with
+		//also code with button to add a certain number of degrees with the push of a button
+		double deg = turnServo.getAngle();
+		if ((joyStick.getPOV()==(90)) && (deg <= max)){
+			//spinTalon.set(1.0); //for using 393 motor
+			deg += 5.0;
 			System.out.println("turn shooter right");
 		}
-		else if (joyStick.getPOV()==(270)){
-			spinTalon.set(-1.0);
+		else if ((joyStick.getPOV()==(270)) && (deg >= min)){
+			//spinTalon.set(-1.0); //for using 393 motor
+			deg -= 5.0;
 			System.out.println("turn shooter left");
 		}
-		else{
-			spinTalon.set(0.0);
-		}
+		turnServo.setAngle(deg);
+		System.out.println("Servo angle is: " + turnServo.getAngle());
+		//else{
+			//spinTalon.set(0.0); //for using 393 motor
+		//}
 	}
-
 }

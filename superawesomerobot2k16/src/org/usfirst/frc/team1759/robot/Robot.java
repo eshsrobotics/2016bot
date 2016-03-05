@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.CameraServer;
 //import edu.wpi.first.wpilibj.AnalogPotentiometer;
 
+
 import edu.wpi.first.wpilibj.Ultrasonic;
 
 /**
@@ -90,7 +91,7 @@ public class Robot extends IterativeRobot {
         
         autoCom = new AutoCom(myRobot, launcher);
         
-        
+        testServo = new Servo(6);
         //pot = new AnalogPotentiometer(3); //for testing purposes
     }
     
@@ -133,10 +134,15 @@ public class Robot extends IterativeRobot {
     	myRobot.tankDrive(leftStick, rightStick); //two joystick tank drive system
     	launcher.shoot(shootStick); //uses throttle on both joysticks to control shooting system
     	launcher.load(shootStick, 1.0, 0.5); //uses buttons 5 and 3 on right joystick to run loading motor
-    	launcher.turn(shootStick);
+    	//launcher.turn(shootStick);
     	climber.climb(shootStick);
-    	//System.out.println("POT " + (pot.get())); //for testing purposes
+    	//System.out.println("POT " + (pot.get())); //for4 testing purposes
+    	if(leftStick.getRawButton(3))
+    		testServo.setAngle(70);//total 120 degrees
+    	else if (leftStick.getRawButton(4))
+    		testServo.setAngle(0);
     	System.out.println(ultrasanic.getRangeInches());
+    	System.out.println(testServo.getAngle());
     }
     
     /**
@@ -149,10 +155,9 @@ public class Robot extends IterativeRobot {
 }
 
 /* stuff to work on:
- * - only bottom limit switches
- * - reimplement potentiometer
+ * - reimplement potentiometer, branch
  * - ultrasonic
- * - change necessary talons to can talons
+ * -  number new talons update wiring sheet
  */
 
 /*
@@ -161,7 +166,6 @@ public class Robot extends IterativeRobot {
  * - paint bumpers
  * - fix driver station
  * - put on talons
- * - change program to accomodate talons
  * - camera shit
  * - build turning shooter
  * - ultrasonic testing/code
