@@ -34,12 +34,16 @@ public class CameraRunnable implements Runnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		
+		PapasVision papasVision = new PapasVision();
 		while(killCameraThread == false)
 		{
 			try 
 			{
 				java.lang.Thread.sleep(sleepTimeMillisecond);
-				System.out.print("Hi I am in the camera thread");
+				System.out.println("Hi I am in the camera thread, about to find a goal.");
+				
+				papasVision.findGoal("C:\\Users\\Ari Berkowicz\\Downloads\\RealFullField\\15.jpg");
 				
 			} 
 			catch (InterruptedException e) 
@@ -50,6 +54,6 @@ public class CameraRunnable implements Runnable {
 		}
 		
 		// As soon as control makes it here, R.I.P.
-
+		System.out.println(Thread.currentThread().getName() + ": I have just been informed that is is my time to die.");
 	}
 }

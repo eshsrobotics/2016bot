@@ -40,11 +40,6 @@ public class PapasVision {
 	Boolean solutionFound;
 	long processingTimeMs;
 
-	public static void main(String args[]) {
- 		PapasVision pv = new PapasVision();
-		pv.findGoal();
-	}
-
 	public PapasVision() {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		// System.load("/usr/local/lib/libopencv_java310.so");
@@ -60,14 +55,14 @@ public class PapasVision {
 		// System.out.println("OpenCV Mat data - Version 2:\n" + m.dump());
 	}
 
-	public void findGoal() {
+	public void findGoal(String pictureFile) {
 		long time = System.currentTimeMillis();
 		solutionFound = false;
 		// Mat frame = new Mat();
 		Mat output = new Mat();
 		// camera.read(frame);
 		// Test images: 3, 194, 227, 268, 337, 363, 421, 426, 528, 541
-		Mat frame = Imgcodecs.imread("C:\\Users\\Ari Berkowicz\\Downloads\\RealFullField\\15.jpg");
+		Mat frame = Imgcodecs.imread(pictureFile);
 		// Mat frame = Imgcodecs.imread("C:\\Users\\Ari
 		// Berkowicz\\Downloads\\IMG_7801.JPG");
 		// Mat frame = Imgcodecs.imread("/goal.png");

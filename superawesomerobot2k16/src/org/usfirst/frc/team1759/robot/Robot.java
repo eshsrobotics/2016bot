@@ -144,7 +144,8 @@ public class Robot extends IterativeRobot {
     }
     protected void fianlize() throws Throwable {
     	try{
-    		
+    		CameraRunnable.killCameraThread = true;
+    		Thread.currentThread().join(CameraRunnable.sleepTimeMillisecond + 1000);
     	}
     	catch(Throwable t)
     	{
