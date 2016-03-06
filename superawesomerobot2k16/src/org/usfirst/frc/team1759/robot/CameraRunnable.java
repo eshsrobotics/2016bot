@@ -26,9 +26,23 @@ public class CameraRunnable implements Runnable {
 	// this many milliseconds for *us* to die before it does itself.
 	public static int sleepTimeMillisecond = 1;
 
-	double distToGoalInch;
-	double azimuthGoalDeg;
-	Boolean solutionFound;
+	/***
+	 * If PapasSolutionFound == true, then this will be the distance, in inches to the target.
+	 * If PapasSolutionFound == false, this will be set to a negative number.
+	 */
+	public static double PapasDistanceInches;
+	
+	/***
+	 * If PapasSolutionFound == true, then this will be the angle that the bot needs
+	 * to turn in order to align with the center of the target.
+	 */
+	public static double PapasAngleDegrees;
+	
+	/***
+	 * Set to true if we acquired a target at the appropriate distance.
+	 * Set to false if no target was acquired (which is going to be fairly common.)
+	 */
+	public static Boolean PapasSolutionFound;
 	
 	//private PapasVision papasVision;
 	
@@ -49,11 +63,11 @@ public class CameraRunnable implements Runnable {
 				System.out.println("Hi I am in the camera thread, about to find a goal.");
 				
 				papasVision.findGoal(i, true);
-				solutionFound = papasVision.getSolutionFound();
-				if (solutionFound)
+				PapasSolutionFound = papasVision.getSolutionFound();
+				if (PapasSolutionFound)
 				{
-					azimuthGoalDeg = papasVision.getAzimuthGoalDeg();
-					distToGoalInch = papasVision.getDistToGoalInch();
+					PapasAngleDegrees = papasVision.getAzimuthGoalDeg();
+					PapasDistanceInches = papasVision.getDistToGoalInch();
 				}
 				i++;
 			} 
