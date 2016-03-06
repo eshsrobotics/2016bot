@@ -8,6 +8,8 @@ public class Launcher {
 	private CANTalon loadTalon, lowerShootTalon, upperShootTalon;
 	//private Victor spinTalon; //for using 393 motor
 	private Servo turnServo;
+	private double papasVisionDistance;
+	private double papasVisionAngle;
 	public Launcher(int loadTalonPort, int lowerShootTalonPort, int upperShootTalonPort){
 		loadTalon = new CANTalon(loadTalonPort);
 		lowerShootTalon = new CANTalon(lowerShootTalonPort);
@@ -36,36 +38,27 @@ public class Launcher {
 			loadTalon.set(0.0);
 			System.out.println();
 		}
-		//System.out.print("load talon val -- " + (loadTalon.get())); //prints loading talon value for testing purposes
 	}
 	
-	
-	public void shoot(Joystick joyStick){ 
-		//code below makes shooters change values based on joystick throttles, used for testing new shooting values
-/*		lowerShootTalon.set(((leftStick.getThrottle()/2.0)+0.5)*-1.0);//this makes so values between -1 and 1 become values between 0 and 1 (for lower shooting wheel)
-		System.out.println("lower shooting val (ls): " + (lowerShootTalon.get())); //prints lower talon value for testing purposes
-		
-		upperShootTalon.set(((rightStick.getThrottle()/2.0)+0.5)); //makes it so upper shooting wheel spins at values between 0 and -1
-		System.out.println("upper shooting val (rs): " + (upperShootTalon.get())); //prints upper talon value for*/
-			
-		//shooting from base of tower
-		if (joyStick.getRawButton(11)){
-			lowerShootTalon.set(-1.0);
-			upperShootTalon.set(1.0);
+	public void manualShoot(Joystick joyStick){
+		if (joyStick.getRawButton(11)){ //shooting from the base of the tower
+			shoot(1.0, 1.0);
 			System.out.println("shoot full speed (bottom of tower)");
 		}
-		//shooting from 11 feet line (green line) (still not for sure)
-		else if (joyStick.getRawButton(12)){
-			lowerShootTalon.set(-1.0);
-			upperShootTalon.set(.75);
+		else if(joyStick.getRawButton(12)){ //shooting from green line
+			shoot(1.0, 0.75);
 			System.out.println("shoot lower speed (green line)");
 		}
-		else{
-			lowerShootTalon.set(0.0);
-			upperShootTalon.set(0.0);
+		else {
+			shoot(0.0, 0.0);
 		}
-
 	}
+	
+	public void shoot(double lowerWheel, double upperWheel){
+		lowerShootTalon.set((Math.abs(lowerWheel))*-1.0); //makes sure lower wheel value is always negative
+		upperShootTalon.set(upperWheel);
+	}
+	
 	//method created to get upper and lower bound values of the servo when rotating shooter is attached to robot
 	//with this method we can find the exact degree range the servo has when shooter mounted between the arms
 	public void testTurn(Joystick joyStick){
@@ -102,4 +95,6 @@ public class Launcher {
 			//spinTalon.set(0.0); //for using 393 motor
 		//}
 	}
+	
+	
 }
