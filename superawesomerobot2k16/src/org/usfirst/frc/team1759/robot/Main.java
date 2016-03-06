@@ -31,7 +31,7 @@ public class Main {
 			// Die, camerathread.  Die!
 			System.out.println(Thread.currentThread().getName() + ": Okay, quitting time.");
 			CameraRunnable.killCameraThread = true;
-    		Thread.currentThread().join(CameraRunnable.sleepTimeMillisecond + 1000);
+    		Thread.currentThread().join(CameraRunnable.sleepTimeMillisecond + 100000);
     		
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block

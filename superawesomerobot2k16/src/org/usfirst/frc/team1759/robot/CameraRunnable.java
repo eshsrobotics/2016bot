@@ -24,7 +24,11 @@ public class CameraRunnable implements Runnable {
 	// will sleep before taking up CPU again.  It also helps for the end of the program:
 	// after the main thread sets our death flag above, it only needs to wait for about
 	// this many milliseconds for *us* to die before it does itself.
-	public static int sleepTimeMillisecond = 3000;
+	public static int sleepTimeMillisecond = 1;
+
+	double distToGoalInch;
+	double azimuthGoalDeg;
+	Boolean solutionFound;
 	
 	//private PapasVision papasVision;
 	
@@ -36,6 +40,7 @@ public class CameraRunnable implements Runnable {
 		// TODO Auto-generated method stub
 		
 		PapasVision papasVision = new PapasVision();
+		int i = 1;
 		while(killCameraThread == false)
 		{
 			try 
@@ -43,8 +48,14 @@ public class CameraRunnable implements Runnable {
 				java.lang.Thread.sleep(sleepTimeMillisecond);
 				System.out.println("Hi I am in the camera thread, about to find a goal.");
 				
-				papasVision.findGoal("C:\\Users\\Ari Berkowicz\\Downloads\\RealFullField\\15.jpg");
-				
+				papasVision.findGoal(i, true);
+				solutionFound = papasVision.getSolutionFound();
+				if (solutionFound)
+				{
+					azimuthGoalDeg = papasVision.getAzimuthGoalDeg();
+					distToGoalInch = papasVision.getDistToGoalInch();
+				}
+				i++;
 			} 
 			catch (InterruptedException e) 
 			{

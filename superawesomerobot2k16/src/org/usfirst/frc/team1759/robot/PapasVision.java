@@ -17,19 +17,32 @@ import org.opencv.core.Size;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.videoio.VideoCapture;
+import org.opencv.videoio.Videoio;
 
 //Thank you to the morotorq (1515) team for letting us modify the code and use it
 
 public class PapasVision {
+	/*
+	 * final static double HORIZ_FOV_DEG = 59.253; final static double
+	 * HORIZ_FOV_RAD = Math.toRadians(HORIZ_FOV_DEG); final static double
+	 * VERT_FOV_DEG = 44.44; final static double VERT_FOV_RAD =
+	 * Math.toRadians(VERT_FOV_DEG); final static double REAL_TAPE_HEIGHT = 14;
+	 * // inches of real tape height final static double IMG_HEIGHT = 480; //
+	 * pixels of image resolution final static double IMG_WIDTH = 640; // pixels
+	 * of image resolution final static double CAM_EL_DEG = 30.0; final static
+	 * double CAM_EL_RAD = Math.toRadians(CAM_EL_DEG);
+	 */
 
 	final static double HORIZ_FOV_DEG = 59.253;
+	//final static double HORIZ_FOV_DEG = 59.703;
 	final static double HORIZ_FOV_RAD = Math.toRadians(HORIZ_FOV_DEG);
 	final static double VERT_FOV_DEG = 44.44;
+	//final static double VERT_FOV_DEG = 33.583;
 	final static double VERT_FOV_RAD = Math.toRadians(VERT_FOV_DEG);
 	final static double REAL_TAPE_HEIGHT = 14; // inches of real tape height
 	final static double IMG_HEIGHT = 480; // pixels of image resolution
 	final static double IMG_WIDTH = 640; // pixels of image resolution
-	final static double CAM_EL_DEG = 30.0; 
+	final static double CAM_EL_DEG = 15.0;
 	final static double CAM_EL_RAD = Math.toRadians(CAM_EL_DEG);
 
 	VideoCapture camera;
@@ -44,8 +57,13 @@ public class PapasVision {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		// System.load("/usr/local/lib/libopencv_java310.so");
 		System.out.println("Welcome to OpenCV " + Core.VERSION);
-		camera = new VideoCapture();
-		camera.open(0);
+		camera = new VideoCapture(0);
+		//camera.open(1);
+		camera.set(Videoio.CAP_PROP_EXPOSURE, -9);
+		camera.set(Videoio.CAP_PROP_BRIGHTNESS, 30);
+		camera.set(Videoio.CAP_PROP_IOS_DEVICE_WHITEBALANCE, 4745);
+		camera.set(Videoio.CAP_PROP_SATURATION, 200);
+		camera.set(Videoio.CAP_PROP_CONTRAST, 10);
 		// Mat m = new Mat(5, 10, CvType.CV_8UC1, new Scalar(0));
 		// System.out.println("OpenCV Mat: " + m);
 		// Mat mr1 = m.row(1);
@@ -55,23 +73,28 @@ public class PapasVision {
 		// System.out.println("OpenCV Mat data - Version 2:\n" + m.dump());
 	}
 
-	public void findGoal(String pictureFile) {
+	public void findGoal(int pictureFile, boolean useCam) {
 		long time = System.currentTimeMillis();
 		solutionFound = false;
-		// Mat frame = new Mat();
+		Mat frame = new Mat();
 		Mat output = new Mat();
-		// camera.read(frame);
-		// Test images: 3, 194, 227, 268, 337, 363, 421, 426, 528, 541
-		Mat frame = Imgcodecs.imread(pictureFile);
-		// Mat frame = Imgcodecs.imread("C:\\Users\\Ari
-		// Berkowicz\\Downloads\\IMG_7801.JPG");
-		// Mat frame = Imgcodecs.imread("/goal.png");
 
+		if (useCam == false) {
+			frame = Imgcodecs.imread(pictureFile + ".png");
+		} else {
+			camera.read(frame);
+			Imgcodecs.imwrite(pictureFile + ".png", frame);
+		}
+		
 		convertImage(frame, output);
-		Imgcodecs.imwrite("converted.png", output);
+		Imgcodecs.imwrite(pictureFile + "_converted.png", output);
 
 		cancelColorsTape(output, output);
-		Imgcodecs.imwrite("cancelcolors.png", output);
+		Imgcodecs.imwrite(pictureFile + "_cancelcolors.png", output);
+
+		Imgproc.erode(output, output, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(5, 5)));
+		Imgproc.dilate(output, output, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(5, 5)));
+		Imgcodecs.imwrite(pictureFile + "_cancelcolors_morphfilt.png", output);
 
 		List<MatOfPoint> contours = findContours(output);
 
@@ -80,7 +103,7 @@ public class PapasVision {
 		for (int i = 0; i < contours.size(); i++) {
 			Imgproc.drawContours(frameContours, contours, i, new Scalar(0, 0, 255));
 		}
-		Imgcodecs.imwrite("frameContours.png", frameContours);
+		Imgcodecs.imwrite(pictureFile + "_frameContours.png", frameContours);
 
 		contours = filterContours(contours);
 
@@ -89,7 +112,7 @@ public class PapasVision {
 		for (int i = 0; i < contours.size(); i++) {
 			Imgproc.drawContours(frameFiltContours, contours, i, new Scalar(0, 0, 255));
 		}
-		Imgcodecs.imwrite("frameFiltContours.png", frameFiltContours);
+		Imgcodecs.imwrite(pictureFile + "_frameFiltContours.png", frameFiltContours);
 
 		if (contours.size() > 0) {
 			MatOfPoint goalContour = findGoalContour(contours);
@@ -107,7 +130,7 @@ public class PapasVision {
 			Imgproc.circle(framePoints, topPts[1], 5, new Scalar(0, 255, 0));
 			Imgproc.circle(framePoints, bottomPts[0], 5, new Scalar(0, 0, 255));
 			Imgproc.circle(framePoints, bottomPts[1], 5, new Scalar(0, 0, 255));
-			Imgcodecs.imwrite("framePoints.png", framePoints);
+			Imgcodecs.imwrite(pictureFile + "_framePoints.png", framePoints);
 
 			System.out.println("Solution found");
 
@@ -117,7 +140,16 @@ public class PapasVision {
 
 			azimuthGoalDeg = findAzimuthGoal(topPts, bottomPts);
 			System.out.println("Goal azimuth: " + azimuthGoalDeg + " degrees");
-
+			
+			
+			if(distToGoalInch > 180)
+			{
+				System.out.println("Sorry integrity check failed");
+				System.out.println("PictureFile number: " + pictureFile);
+			}
+			else{
+				solutionFound = true;
+			}
 			/*
 			 * if(isFacingForward(bottomPts)) { System.out.println(
 			 * "facing forward"); } else { System.out.println("isFacingLeft: " +
@@ -129,7 +161,6 @@ public class PapasVision {
 			 * System.out.println("distFromMidline: " +
 			 * distFromMidline(bottomPts, topPts, distToGoalInch)); }
 			 */
-			solutionFound = true;
 		} else {
 			System.out.println("Solution not found");
 		}
@@ -138,33 +169,30 @@ public class PapasVision {
 	}
 
 	public static void convertImage(Mat input, Mat output) {
-		Imgproc.cvtColor(input, output, Imgproc.COLOR_RGB2GRAY);
-		/*
-		 * Imgproc.blur(input, output, new Size(5,5)); Imgproc.cvtColor(output,
-		 * output, Imgproc.COLOR_RGB2GRAY); //Imgproc.cvtColor(output, output,
-		 * Imgproc.COLOR_BGR2HSV);
-		 * 
-		 * Imgproc.erode(output, output,
-		 * Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(5,
-		 * 5))); Imgproc.dilate(output, output,
-		 * Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(5,
-		 * 5)));
-		 * 
-		 * Imgproc.dilate(output, output,
-		 * Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(5,
-		 * 5))); Imgproc.erode(output, output,
-		 * Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(5,
-		 * 5)));
-		 * 
-		 * Imgproc.blur(output, output, new Size(5,5));
-		 */
+		//Imgproc.cvtColor(input, output, Imgproc.COLOR_RGB2GRAY);
+		
+		Imgproc.blur(input, output, new Size(5,5));
+		//Imgproc.cvtColor(output, output, Imgproc.COLOR_RGB2GRAY);
+		//Imgproc.cvtColor(output, output, Imgproc.COLOR_BGR2HSV);
+
+		//Imgproc.erode(output, output, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(5, 5)));
+		//Imgproc.dilate(output, output, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(5, 5)));
+
+		//Imgproc.dilate(output, output, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(5, 5)));
+		//Imgproc.erode(output, output, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(5, 5)));
+		 
+		//Imgproc.blur(output, output, new Size(5,5));
+		 
 	}
 
 	// scalar params: H(0-180), S(0-255), V(0-255)
 	public static void cancelColorsTape(Mat input, Mat output) {
-		Imgproc.threshold(input, output, 0, 255, Imgproc.THRESH_BINARY + Imgproc.THRESH_OTSU);
-		// Core.inRange(input, new Scalar(25, 0, 220), new Scalar(130, 80, 255),
-		// output);
+		/*Imgproc.threshold(input, output, 0, 255, Imgproc.THRESH_BINARY + Imgproc.THRESH_OTSU);
+		Core.inRange(input, new Scalar(25, 0, 220), new Scalar(130, 80, 255), output);
+		
+		Core.inRange(input, new Scalar(65, 90, 0), new Scalar(85, 115, 35), output);
+		Scaler value order is (Blue, Green, Red)*/
+		Core.inRange(input, new Scalar(30, 60, 0), new Scalar(115, 145, 65), output);		
 	}
 
 	public static List<MatOfPoint> findContours(Mat image) {
@@ -198,7 +226,7 @@ public class PapasVision {
 
 			Rect rect = Imgproc.boundingRect(contours.get(i));
 
-			if (contourToConvexHullRatio < 0.5 && rect.width > 40 && rect.height > 40) {
+			if (contourToConvexHullRatio < 0.7 && rect.width > 40 && rect.height > 40) {
 				newContours.add(convexHullMatOfPoint);
 				// newContours.add(contours.get(i));
 			}
@@ -432,5 +460,20 @@ public class PapasVision {
 			topLeft = topPts[1];
 		}
 		return dist * (Math.abs(bottomLeft.x - topLeft.x) / Math.abs(bottomLeft.y - topLeft.y));
+	}
+	
+	public Boolean getSolutionFound()
+	{
+		return solutionFound;
+	}
+	
+	public double getAzimuthGoalDeg()
+	{
+		return azimuthGoalDeg;
+	}
+
+	public double getDistToGoalInch()
+	{
+		return distToGoalInch;
 	}
 }
