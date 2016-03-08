@@ -10,12 +10,13 @@ public class Launcher {
 	private Servo turnServo;
 	private double papasVisionDistance;
 	private double papasVisionAngle;
+	private double error; //error value
 	public Launcher(int loadTalonPort, int lowerShootTalonPort, int upperShootTalonPort){
 		loadTalon = new CANTalon(loadTalonPort);
 		lowerShootTalon = new CANTalon(lowerShootTalonPort);
 		upperShootTalon = new CANTalon(upperShootTalonPort);
 		//spinTalon = new Victor(2); //for usng 393 motors
-		turnServo = new Servo(3); //for using servo turning
+		turnServo = new Servo(2); //for using servo turning
 	}
 	public void load(Joystick joystick, double loadingSpeed, double halfSpeed){
 		if (joystick.getRawButton(5)){ //runs loading talon forwards with button 5
@@ -64,10 +65,10 @@ public class Launcher {
 	public void testTurn(Joystick joyStick){
 		double deg = turnServo.getAngle();
 		if ((joyStick.getPOV()==(0))&&(deg<=120)){ //right on shooter, up on pov, positive servo angle val
-			deg += 1.0;
+			deg += 5.0;
 		}
 		else if (joyStick.getPOV()==(180)&& (deg>=0)){
-			deg -= 1.0;
+			deg -= 5.0;
 		}
 		turnServo.setAngle(deg);
 		System.out.println("Servo angle is: " + turnServo.getAngle());
@@ -96,5 +97,10 @@ public class Launcher {
 		//}
 	}
 	
+	//RIGHT NEGATIVE, LEFT POSITIVE
+	//public void autoTurn(){
+	//if papas vision angle is left of tower, need to move servo right, if papas vision angle is right of tower, need to move servo left
+		//if (papasVisionAngle)
+	//}
 	
 }
