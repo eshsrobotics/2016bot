@@ -15,7 +15,7 @@ public class Main {
 		Thread.currentThread().setName("Main thread");
 		
 		
-		int runningTimeMiliseconds = 10000;
+		int runningTimeMiliseconds = 1000000;
 		// TODO Auto-generated method stub
     	CameraRunnable runnable = new CameraRunnable();
     	cameraThread = new Thread(runnable);
@@ -25,13 +25,11 @@ public class Main {
     	
     	
     	try {
-    		System.out.println(Thread.currentThread().getName() + ": About to go to bed.");
 			Thread.currentThread().sleep(runningTimeMiliseconds);
 			
 			// Die, camerathread.  Die!
-			System.out.println(Thread.currentThread().getName() + ": Okay, quitting time.");
 			CameraRunnable.killCameraThread = true;
-    		Thread.currentThread().join(CameraRunnable.sleepTimeMillisecond + 100000);
+    		Thread.currentThread().join(CameraRunnable.sleepTimeMillisecond);
     		
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
