@@ -8,14 +8,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.Servo;
-
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
 //import edu.wpi.first.wpilibj.AnalogPotentiometer;
+
 
 import edu.wpi.first.wpilibj.Ultrasonic;
 
@@ -44,7 +42,6 @@ public class Robot extends IterativeRobot {
     CANTalon canTalon1;
     CANTalon canTalon2;
     CANTalon canTalon3;
-    Servo testServo;
 
     Thread cameraThread;
     
@@ -87,17 +84,16 @@ public class Robot extends IterativeRobot {
     	//front left, back left, front right, back right
         myRobot = new RobotDrive(canTalon0, canTalon1, canTalon2, canTalon3);
         
-        //load talon port (cantalon), lower shoot talon port(normal talon), upper shoot talon port(normal talon)
-        launcher = new Launcher(4,0,1);
+        //load talon port (cantalon), lower shoot talon port(cantalon), upper shoot talon port(cantalon)
+        launcher = new Launcher(4,5,6);
         leftStick = new Joystick(0);
         rightStick = new Joystick(1);
         shootStick = new Joystick(2);
         
-        //talonPortActuator1,talonPortActuator2,lowerlimitswitch1port, lowerlimitswitch2port, upperlimitswitch1port, upperlimitswitch2port
-        climber = new Climber(5,6,0,1);
+        //talonPortActuator1 (cantalon) ,talonPortActuator2 (cantalon),lowerlimitswitch1port, lowerlimitswitch2port, upperlimitswitch1port, upperlimitswitch2port
+        climber = new Climber(7,8,0,1);
         
         autoCom = new AutoCom(myRobot, launcher);
-        
         
         //pot = new AnalogPotentiometer(3); //for testing purposes
     }
@@ -139,11 +135,12 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
     	myRobot.tankDrive(leftStick, rightStick); //two joystick tank drive system
-    	launcher.shoot(shootStick); //uses throttle on both joysticks to control shooting system
+    	launcher.manualShoot(shootStick); //uses throttle on both joysticks to control shooting system
     	launcher.load(shootStick, 1.0, 0.5); //uses buttons 5 and 3 on right joystick to run loading motor
-    	launcher.turn(shootStick);
+    	launcher.testTurn(shootStick);
     	climber.climb(shootStick);
-    	//System.out.println("POT " + (pot.get())); //for testing purposes
+    	//System.out.println("POT " + (pot.get())); //for4 testing purposes
+    	System.out.println(ultrasanic.getRangeInches());
     }
     
     /**
@@ -152,7 +149,7 @@ public class Robot extends IterativeRobot {
     public void testPeriodic() {
     
     }
-    protected void fianlize() throws Throwable {
+    protected void finalize() throws Throwable {
     	try{
     		CameraRunnable.killCameraThread = true;
     		Thread.currentThread().join(CameraRunnable.sleepTimeMillisecond + 1000);
@@ -169,10 +166,9 @@ public class Robot extends IterativeRobot {
 }
 
 /* stuff to work on:
- * - only bottom limit switches
- * - reimplement potentiometer
- * - ultrasonic
- * - change necessary talons to can talons
+ * - reimplement potentiometer, branch
+ * - ultrasonic [canceled]
+ * -  number new talons update wiring sheet
  */
 
 /*
@@ -181,10 +177,9 @@ public class Robot extends IterativeRobot {
  * - paint bumpers
  * - fix driver station
  * - put on talons
- * - change program to accomodate talons
- * - camera shit
+ * - camera shit [done]
  * - build turning shooter
- * - ultrasonic testing/code
+ * - ultrasonic testing/code [canceled]
  * 
  */
 

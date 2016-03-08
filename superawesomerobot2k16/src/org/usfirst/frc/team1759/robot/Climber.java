@@ -31,7 +31,7 @@ public class Climber {
     	 else if (joystick.getRawButton(9)){ 
     		 move(0.5, true); //actuators go up at half speed if button 9 is hit... max1, max2,
     		 System.out.println("up half speed");
-    	 }
+    	}
     	 else if (joystick.getRawButton(10)){
     		 move(0.5, false); //actuators go down at half speed if button 10 is hit... min1, min2, 
     		 System.out.println("down half speed");
