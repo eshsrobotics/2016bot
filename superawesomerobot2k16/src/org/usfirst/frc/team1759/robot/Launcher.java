@@ -44,11 +44,11 @@ public class Launcher {
 	public void manualShoot(Joystick joyStick){
 		if (joyStick.getRawButton(11)){ //shooting from the base of the tower
 			shoot(1.0, 1.0);
-			System.out.println("shoot full speed (bottom of tower)");
+			//System.out.println("shoot full speed (bottom of tower)");
 		}
 		else if(joyStick.getRawButton(12)){ //shooting from green line
 			shoot(1.0, 0.75);
-			System.out.println("shoot lower speed (green line)");
+			//System.out.println("shoot lower speed (green line)");
 		}
 		else {
 			shoot(0.0, 0.0);
@@ -71,7 +71,7 @@ public class Launcher {
 			deg -= 5.0;
 		}
 		turnServo.setAngle(deg);
-		System.out.println("Servo angle is: " + turnServo.getAngle());
+		//System.out.println("Servo angle is: " + turnServo.getAngle());
 	}
 	
 	
@@ -97,7 +97,7 @@ public class Launcher {
 		//}
 	}
 	
-	//RIGHT NEGATIVE, LEFT POSITIVE
+	//RIGHT NEGATIVE, LEFT POSITIVE //error value 3 degres
 	//public void autoTurn(){
 	//if papas vision angle is left of tower, need to move servo right, if papas vision angle is right of tower, need to move servo left
 		//if (papasVisionAngle)

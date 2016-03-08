@@ -140,7 +140,7 @@ public class Robot extends IterativeRobot {
     	launcher.testTurn(shootStick);
     	climber.climb(shootStick);
     	//System.out.println("POT " + (pot.get())); //for4 testing purposes
-    	System.out.println(ultrasanic.getRangeInches());
+    	//System.out.println(ultrasanic.getRangeInches());
     }
     
     /**
