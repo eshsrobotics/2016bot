@@ -8,8 +8,6 @@ public class Launcher {
 	private CANTalon loadTalon, lowerShootTalon, upperShootTalon;
 	//private Victor spinTalon; //for using 393 motor
 	private Servo turnServo;
-	private double papasVisionDistance;
-	private double papasVisionAngle;
 	private double error; //error value
 	public Launcher(int loadTalonPort, int lowerShootTalonPort, int upperShootTalonPort){
 		loadTalon = new CANTalon(loadTalonPort);
@@ -98,9 +96,11 @@ public class Launcher {
 	}
 	
 	//RIGHT NEGATIVE, LEFT POSITIVE
-	//public void autoTurn(){
+	public void autoTurn(double papasVisionAngle,double error){
 	//if papas vision angle is left of tower, need to move servo right, if papas vision angle is right of tower, need to move servo left
-		//if (papasVisionAngle)
-	//}
+		while ((papasVisionAngle <= (0 + error)) && (papasVisionAngle >=(0 - error))){
+			
+		}
+	}
 	
 }
