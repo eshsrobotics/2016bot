@@ -9,6 +9,8 @@ public class Launcher {
 	//private Victor spinTalon; //for using 393 motor
 	private Servo turnServo;
 	private double error; //error value
+	private double min; //hard coded shooter min and max values
+	private double max; 
 	public Launcher(int loadTalonPort, int lowerShootTalonPort, int upperShootTalonPort){
 		loadTalon = new CANTalon(loadTalonPort);
 		lowerShootTalon = new CANTalon(lowerShootTalonPort);
@@ -72,34 +74,40 @@ public class Launcher {
 		System.out.println("Servo angle is: " + turnServo.getAngle());
 	}
 	
-	
-	public void turn(Joystick joyStick, double max, double min){
-		//write code here for servo
-		//need test code to see on robot how many degrees of servo we have to work with
-		//also code with button to add a certain number of degrees with the push of a button
-		double deg = turnServo.getAngle();
-		if ((joyStick.getPOV()==(90)) && (deg <= max)){
-			//spinTalon.set(1.0); //for using 393 motor
-			deg += 5.0;
-			System.out.println("turn shooter right");
+	public void turn(double angle){
+		if (angle > max){
+			System.out.println("Desired target too far right of shooter range. Turn robot right.");
 		}
-		else if ((joyStick.getPOV()==(270)) && (deg >= min)){
-			//spinTalon.set(-1.0); //for using 393 motor
-			deg -= 5.0;
-			System.out.println("turn shooter left");
+		else if (angle < min){
+			System.out.println("Desired target too far left of shooter range. Turn robot left.");
 		}
-		turnServo.setAngle(deg);
+		else {
+			turnServo.setAngle(angle);
+		}
 		System.out.println("Servo angle is: " + turnServo.getAngle());
-		//else{
-			//spinTalon.set(0.0); //for using 393 motor
-		//}
 	}
 	
-	//RIGHT NEGATIVE, LEFT POSITIVE
-	public void autoTurn(double papasVisionAngle,double error){
-	//if papas vision angle is left of tower, need to move servo right, if papas vision angle is right of tower, need to move servo left
-		while ((papasVisionAngle <= (0 + error)) && (papasVisionAngle >=(0 - error))){
-			
+	public void manualTurn(Joystick joyStick){
+		double deg = turnServo.getAngle();
+		if (joyStick.getPOV()==(90)){ //turns shooter right
+			deg += 5.0;
+			turn(deg);
+		}
+		else if (joyStick.getPOV()==(270)){ //turns shooter left
+			deg -= 5.0;
+			turn(deg);
+		}
+	}
+	
+	//papas vision angle: RIGHT NEGATIVE, LEFT POSITIVE
+	public void autoTurn(double papasVisionAngle, double error){ //start error value at about 3 degrees
+		double ang = turnServo.getAngle();
+		//if papas vision angle is left of tower, need to move servo right, if papas vision angle is right of tower, need to move servo left
+		if (papasVisionAngle > (0 + error)){ //left of tower, need to move servo right
+			turn(ang + papasVisionAngle);
+		}
+		else if (papasVisionAngle <(0 - error)){//right of tower, need to move servo left
+			turn(ang - papasVisionAngle);
 		}
 	}
 	

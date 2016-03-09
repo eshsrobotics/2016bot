@@ -146,22 +146,13 @@ public class Robot extends IterativeRobot {
     
 }
 
-/* stuff to work on:
- * - reimplement potentiometer, branch
- * - ultrasonic
- * -  number new talons update wiring sheet
- */
-
 /*
- * TO DO FriDAY:
- * - build bumpers
- * - paint bumpers
+ * TO DO WEDNESDAY:
  * - fix driver station
- * - put on talons
  * - camera shit
- * - build turning shooter
- * - ultrasonic testing/code
- * 
+ * - set up potentiometer stuff
+ * - test continuous servo
+ * - create methods to use feedback from papas vision
  */
 
 /*
