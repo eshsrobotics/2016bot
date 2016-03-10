@@ -65,8 +65,8 @@ public class PapasVision {
 	double goalRejectionThresholdInches;
 
 	public PapasVision(double goalRejectionThresholdInches, boolean writeIntermediateFilesToDisk) {
+		System.load("/usr/local/share/OpenCV/java/libopencv_java310.so");
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-		// System.load("/usr/local/lib/libopencv_java310.so");
 		System.out.println("Welcome to OpenCV " + Core.VERSION);
 		camera = new VideoCapture(0);
 		// camera.open(1);
