@@ -64,10 +64,10 @@ public class Launcher {
 	//with this method we can find the exact degree range the servo has when shooter mounted between the arms
 	public void testTurn(Joystick joyStick){
 		double deg = turnServo.getAngle();
-		if ((joyStick.getPOV()==(0))&&(deg<=120)){ //right on shooter, up on pov, positive servo angle val
+		if ((joyStick.getPOV()==(0))){ //right on shooter, up on pov, positive servo angle val
 			deg += 5.0;
 		}
-		else if (joyStick.getPOV()==(180)&& (deg>=0)){
+		else if (joyStick.getPOV()==(180)){
 			deg -= 5.0;
 		}
 		turnServo.setAngle(deg);
