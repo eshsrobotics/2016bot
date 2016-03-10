@@ -29,23 +29,23 @@ STATUS
       CANTalon motor controllers. Also have added a launching class with launching and loading methods,
       Preliminary launching code has been written and tested (but not with motors yet, waiting on build team
       to finish launcher). Ari and Adrian working with PIXY camera.
-	2016-02-17:
-	  - According to Michael, the camera can be mounted fixed on top of the shooter.  (We didn't know this.)
-	  - Tasks for computer vision side project:
-	    * Get OpenCV project loaded and running on the RoboRIO [7/10 difficulty]
-		* Download the appropriate OpenCV dependencies and check them into 2016bot\TestBedProgram\TestBedProgramm\ [Easy]
-		* Configure the USB camera by adding a ring of lights around the lens
-		* Sample images location: https://usfirst.collab.net/sf/frs/do/listReleases/projects.wpilib/frs.2016_field_images [does not load]
-		  * We need to add sample field images to the repo to exercise the OpenCV code.
-		* Uche to look into OpenCV, too [10/10 difficulty]
-		* WPILib has a Maven repo (four, actually.)  The question is not whether _that_ works.  The question is whether
-		  it will work from the ESHS school network.
+        2016-02-17:
+          - According to Michael, the camera can be mounted fixed on top of the shooter.  (We didn't know this.)
+          - Tasks for computer vision side project:
+            * Get OpenCV project loaded and running on the RoboRIO [7/10 difficulty]
+                * Download the appropriate OpenCV dependencies and check them into 2016bot\TestBedProgram\TestBedProgramm\ [Easy]
+                * Configure the USB camera by adding a ring of lights around the lens
+                * Sample images location: https://usfirst.collab.net/sf/frs/do/listReleases/projects.wpilib/frs.2016_field_images [does not load]
+                  * We need to add sample field images to the repo to exercise the OpenCV code.
+                * Uche to look into OpenCV, too [10/10 difficulty]
+                * WPILib has a Maven repo (four, actually.)  The question is not whether _that_ works.  The question is whether
+                  it will work from the ESHS school network.
 
 1. Create 4-CIM drive train program
 
-   - As of 2016-02-10 we have final test bed built and driving with four CIMS and two gearboxes. (Controlled by new CANTalon 
+   - As of 2016-02-10 we have final test bed built and driving with four CIMS and two gearboxes. (Controlled by new CANTalon
      motor controllers)
-   - May be adding a shifting gearbox (depending on time constraints). If we add this we will need to have 
+   - May be adding a shifting gearbox (depending on time constraints). If we add this we will need to have
      a program to shift a servo which will shift the gearbox between multiple speeds (explained more in pt 2)
    - Wrap control of the drive train motors around user-friendly functions (turnLeft(),
      turnRight(), driveForward(), driveBack().)
@@ -170,6 +170,6 @@ CONFIGURATION
    git config --global core.editor "'C:/Users/frc1/Documents/Notepad++Portable/Notepad++Portable.exe' -multiInst -notabbar -nosession -noPlugin"
 
    [This command defines a command, "git ll", which is more useful than the
-   normal "git log" command.]
+   normal "git log" command, and then a short version, "git l".]
 
-   git config alias.ll "!git log --graph --decorate --color --stat | git name-rev --stdin --refs=refs/heads/master | less -r"
+   git config alias.ll '!git log --graph --decorate --color --stat | git name-rev --stdin --refs=refs/heads/master | less -r'
