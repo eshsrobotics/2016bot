@@ -85,7 +85,7 @@ public class Robot extends IterativeRobot {
         shootStick = new Joystick(2);
         
         //talonPortActuator1 (cantalon) ,talonPortActuator2 (cantalon),lowerlimitswitch1port, lowerlimitswitch2port, upperlimitswitch1port, upperlimitswitch2port
-        climber = new Climber(7,8,0,1);
+        climber = new Climber(7,8,0,1,0,1);
         
         autoCom = new AutoCom(myRobot, launcher);
         
@@ -134,7 +134,7 @@ public class Robot extends IterativeRobot {
     	launcher.manualTurn(shootStick);
     	climber.climb(shootStick);
     	//System.out.println("POT " + (pot.get())); //for4 testing purposes
-    	System.out.println(ultrasanic.getRangeInches());
+    	//System.out.println(ultrasanic.getRangeInches());
     }
     
     /**
