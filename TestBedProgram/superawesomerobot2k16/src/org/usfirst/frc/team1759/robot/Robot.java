@@ -1,21 +1,16 @@
 package org.usfirst.frc.team1759.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-//import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.CameraServer;
-//import edu.wpi.first.wpilibj.AnalogPotentiometer;
-
-
-import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -40,10 +35,9 @@ public class Robot extends IterativeRobot {
     CANTalon canTalon1;
     CANTalon canTalon2;
     CANTalon canTalon3;
+    Servo testServo;
+    PapasVision vision;
     
-    CommandGroup autoCom;
-    
-    Ultrasonic ultrasanic;
     //CameraServer server;
     
     //AnalogPotentiometer pot; //for testing purposes
@@ -73,21 +67,19 @@ public class Robot extends IterativeRobot {
     	canTalon2.setInverted(true);
     	canTalon3.setInverted(true);
     	
-    	ultrasanic = new Ultrasonic(5,4);
-    	
     	//front left, back left, front right, back right
         myRobot = new RobotDrive(canTalon0, canTalon1, canTalon2, canTalon3);
         
-        //load talon port (cantalon), lower shoot talon port(cantalon), upper shoot talon port(cantalon)
-        launcher = new Launcher(4,5,6);
+        //load talon port (cantalon), lower shoot talon port(normal talon), upper shoot talon port(normal talon)
+        launcher = new Launcher(4,0,1);
         leftStick = new Joystick(0);
         rightStick = new Joystick(1);
         shootStick = new Joystick(2);
         
-        //talonPortActuator1 (cantalon) ,talonPortActuator2 (cantalon),lowerlimitswitch1port, lowerlimitswitch2port, upperlimitswitch1port, upperlimitswitch2port
-        climber = new Climber(7,8,0,1);
+        //talonPortActuator1,talonPortActuator2,lowerlimitswitch1port, lowerlimitswitch2port, upperlimitswitch1port, upperlimitswitch2port
+        climber = new Climber(5,6,0,1,2,3);
         
-        autoCom = new AutoCom(myRobot, launcher);
+        
         
         //pot = new AnalogPotentiometer(3); //for testing purposes
     }
@@ -105,7 +97,6 @@ public class Robot extends IterativeRobot {
     	autoSelected = (String) chooser.getSelected();
 //		autoSelected = SmartDashboard.getString("Auto Selector", defaultAuto);
 		System.out.println("Auto selected: " + autoSelected);
-		autoCom.start();
     }
 
     /**
@@ -121,7 +112,6 @@ public class Robot extends IterativeRobot {
     	//Put default auto code here
             break;
     	}
-    	Scheduler.getInstance().run();
     }
 
     /**
@@ -129,12 +119,11 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
     	myRobot.tankDrive(leftStick, rightStick); //two joystick tank drive system
-    	launcher.manualShoot(shootStick); //uses throttle on both joysticks to control shooting system
+    	launcher.shoot(shootStick); //uses throttle on both joysticks to control shooting system
     	launcher.load(shootStick, 1.0, 0.5); //uses buttons 5 and 3 on right joystick to run loading motor
-    	launcher.manualTurn(shootStick);
+    	launcher.turn(shootStick);
     	climber.climb(shootStick);
-    	//System.out.println("POT " + (pot.get())); //for4 testing purposes
-    	System.out.println(ultrasanic.getRangeInches());
+    	//System.out.println("POT " + (pot.get())); //for testing purposes
     }
     
     /**
@@ -146,23 +135,9 @@ public class Robot extends IterativeRobot {
     
 }
 
-/*
- * TO DO WEDNESDAY:
- * - fix driver station
- * - camera shit
- * - set up potentiometer stuff
- * - test continuous servo
- * - create methods to use feedback from papas vision
+/* stuff to work on:
+ * - gear shifting
  */
-
-/*
- * TO DO AT COMP:
- * put on potentiometers
- * put on camera
- * remount electronics boards
- *
- */
-
 
 
 
