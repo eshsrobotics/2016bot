@@ -2,12 +2,13 @@ package org.usfirst.frc.team1759.robot;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.Timer;
+//import edu.wpi.first.wpilibj.Servo;
 public class Launcher {
 	
 	private CANTalon loadTalon, lowerShootTalon, upperShootTalon;
-	//private Victor spinTalon; //for using 393 motor
-	private Servo turnServo;
+	private Victor spinTalon; //for using 393 motor
+	//private Servo turnServo;
 	private double error; //error value
 	private double min; //hard coded shooter min and max values
 	private double max; 
@@ -15,8 +16,8 @@ public class Launcher {
 		loadTalon = new CANTalon(loadTalonPort);
 		lowerShootTalon = new CANTalon(lowerShootTalonPort);
 		upperShootTalon = new CANTalon(upperShootTalonPort);
-		//spinTalon = new Victor(2); //for usng 393 motors
-		turnServo = new Servo(2); //for using servo turning
+		spinTalon = new Victor(2); //for usng 393 motors
+		//turnServo = new Servo(2); //for using servo turning
 	}
 	public void load(Joystick joystick, double loadingSpeed, double halfSpeed){
 		if (joystick.getRawButton(5)){ //runs loading talon forwards with button 5
@@ -60,6 +61,14 @@ public class Launcher {
 		upperShootTalon.set(upperWheel);
 	}
 	
+	public void autoShoot(double papasVisionDistance, double error){
+		double lower = 0, upper = 0;
+		//put in algorithm to calculate upper and lower wheel speeds
+		shoot(lower, upper);
+	}
+	
+	/*
+	
 	//method created to get upper and lower bound values of the servo when rotating shooter is attached to robot
 	//with this method we can find the exact degree range the servo has when shooter mounted between the arms
 	public void testTurn(Joystick joyStick){
@@ -87,7 +96,7 @@ public class Launcher {
 		System.out.println("Servo angle is: " + turnServo.getAngle());
 	}
 	
-	public void manualTurn(Joystick joyStick){
+	public void manualTurn0(Joystick joyStick){
 		double deg = turnServo.getAngle();
 		if (joyStick.getPOV()==(90)){ //turns shooter right
 			deg += 5.0;
@@ -100,7 +109,7 @@ public class Launcher {
 	}
 	
 	//papas vision angle: RIGHT NEGATIVE, LEFT POSITIVE
-	public void autoTurn(double papasVisionAngle, double error){ //start error value at about 3 degrees
+	public void autoTurn0(double papasVisionAngle, double error){ //start error value at about 3 degrees
 		double ang = turnServo.getAngle();
 		//if papas vision angle is left of tower, need to move servo right, if papas vision angle is right of tower, need to move servo left
 		if (papasVisionAngle > (0 + error)){ //left of tower, need to move servo right
@@ -108,6 +117,43 @@ public class Launcher {
 		}
 		else if (papasVisionAngle <(0 - error)){//right of tower, need to move servo left
 			turn(ang - papasVisionAngle);
+		}
+	}*/
+	
+	//all the new shit below
+	
+	public void manualTurn(Joystick joyStick){
+		if (joyStick.getPOV()==(90))
+			spinTalon.set(1.0);
+		else if (joyStick.getPOV()==(270))
+			spinTalon.set(-1.0);
+		
+		else if (joyStick.getTrigger()){
+			spinTalon.set(1.0);
+			Timer.delay(0.5);
+			spinTalon.set(0.0);
+		}
+		
+		
+		else
+			spinTalon.set(0.0);
+	}
+	
+	//papas vision angle: RIGHT NEGATIVE, LEFT POSITIVE
+	public void autoTurn(double papasVisionAngle, double error){ //start error value at about 3 degrees
+		double angRate = 53.2327; //value calculated by testing distance of chord travelled in .5 sec, could be made more accurate by more tests
+		//if papas vision angle is left of tower, need to move servo right, if papas vision angle is right of tower, need to move servo left
+		double angle = Math.abs(papasVisionAngle);
+		double time = (angle/angRate);
+		if (papasVisionAngle > (0 + error)){ //left of tower, need to move servo right
+			spinTalon.set(1.0);
+			Timer.delay(time);
+			spinTalon.set(0.0);
+		}
+		else if (papasVisionAngle <(0 - error)){//right of tower, need to move servo left
+			spinTalon.set(1.0);
+			Timer.delay(time);
+			spinTalon.set(0.0);
 		}
 	}
 	

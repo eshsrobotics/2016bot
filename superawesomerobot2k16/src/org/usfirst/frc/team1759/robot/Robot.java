@@ -131,7 +131,7 @@ public class Robot extends IterativeRobot {
     	myRobot.tankDrive(leftStick, rightStick); //two joystick tank drive system
     	launcher.manualShoot(shootStick); //uses throttle on both joysticks to control shooting system
     	launcher.load(shootStick, 1.0, 0.5); //uses buttons 5 and 3 on right joystick to run loading motor
-    	launcher.testTurn(shootStick);
+    	launcher.manualTurn(shootStick);
     	climber.climb(shootStick);
     	//System.out.println("POT " + (pot.get())); //for4 testing purposes
     	System.out.println(ultrasanic.getRangeInches());
