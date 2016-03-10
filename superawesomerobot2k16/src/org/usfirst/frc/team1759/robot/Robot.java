@@ -31,7 +31,7 @@ public class Robot extends IterativeRobot {
     final String customAuto = "My Auto";
     String autoSelected;
     SendableChooser chooser;
-	
+
     RobotDrive myRobot;
     Launcher launcher;
     Climber climber;
@@ -44,143 +44,134 @@ public class Robot extends IterativeRobot {
     CANTalon canTalon3;
 
     Thread cameraThread;
-    
+
     CommandGroup autoCom;
-    
+
     Ultrasonic ultrasanic;
     //CameraServer server;
-    
+
     //AnalogPotentiometer pot; //for testing purposes
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
-    	//enable the camera
-    	/*server = CameraServer.getInstance();
+        //enable the camera
+        /*server = CameraServer.getInstance();
         server.setQuality(100);
         server.startAutomaticCapture("cam0");*/
-    	CameraRunnable runnable = new CameraRunnable();
-    	cameraThread = new Thread(runnable);
-    	cameraThread.setName("robot camera thread");
-    	cameraThread.start();
-    	
+        CameraRunnable runnable = new CameraRunnable();
+        cameraThread = new Thread(runnable);
+        cameraThread.setName("robot camera thread");
+        cameraThread.start();
+
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", defaultAuto);
         chooser.addObject("My Auto", customAuto);
-        SmartDashboard.putData("Auto choices", chooser);												
-        
-        canTalon0 = new CANTalon(0); 
-    	canTalon1 = new CANTalon(1);
-    	canTalon2 = new CANTalon(2);
-    	canTalon3 = new CANTalon(3);
-    	
-    	//output for talons was reversed so this inverts them
-    	canTalon0.setInverted(true);
-    	canTalon1.setInverted(true);
-    	canTalon2.setInverted(true);
-    	canTalon3.setInverted(true);
-    	
-    	//front left, back left, front right, back right
+        SmartDashboard.putData("Auto choices", chooser);
+
+        canTalon0 = new CANTalon(0);
+        canTalon1 = new CANTalon(1);
+        canTalon2 = new CANTalon(2);
+        canTalon3 = new CANTalon(3);
+
+        //output for talons was reversed so this inverts them
+        canTalon0.setInverted(true);
+        canTalon1.setInverted(true);
+        canTalon2.setInverted(true);
+        canTalon3.setInverted(true);
+
+        //front left, back left, front right, back right
         myRobot = new RobotDrive(canTalon0, canTalon1, canTalon2, canTalon3);
-        
+
         //load talon port (cantalon), lower shoot talon port(cantalon), upper shoot talon port(cantalon)
         launcher = new Launcher(4,5,6);
         leftStick = new Joystick(0);
         rightStick = new Joystick(1);
         shootStick = new Joystick(2);
-        
+
         //talonPortActuator1 (cantalon) ,talonPortActuator2 (cantalon),lowerlimitswitch1port, lowerlimitswitch2port, upperlimitswitch1port, upperlimitswitch2port
         climber = new Climber(7,8,0,1);
-        
+
         autoCom = new AutoCom(myRobot, launcher);
-        
+
         //pot = new AnalogPotentiometer(3); //for testing purposes
     }
-    
-	/**
-	 * This autonomous (along with the chooser code above) shows how to select between different autonomous modes
-	 * using the dashboard. The sendable chooser code works with the Java SmartDashboard. If you prefer the LabVIEW
-	 * Dashboard, remove all of the chooser code and uncomment the getString line to get the auto name from the text box
-	 * below the Gyro
-	 *
-	 * You can add additional auto modes by adding additional comparisons to the switch structure below with additional strings.
-	 * If using the SendableChooser make sure to add them to the chooser code above as well.
-	 */
+
+        /**
+         * This autonomous (along with the chooser code above) shows how to select between different autonomous modes
+         * using the dashboard. The sendable chooser code works with the Java SmartDashboard. If you prefer the LabVIEW
+         * Dashboard, remove all of the chooser code and uncomment the getString line to get the auto name from the text box
+         * below the Gyro
+         *
+         * You can add additional auto modes by adding additional comparisons to the switch structure below with additional strings.
+         * If using the SendableChooser make sure to add them to the chooser code above as well.
+         */
     public void autonomousInit() {
-    	autoSelected = (String) chooser.getSelected();
+        autoSelected = (String) chooser.getSelected();
 //		autoSelected = SmartDashboard.getString("Auto Selector", defaultAuto);
-		System.out.println("Auto selected: " + autoSelected);
-		autoCom.start();
+                System.out.println("Auto selected: " + autoSelected);
+                autoCom.start();
     }
 
     /**
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
-    	switch(autoSelected) {
-    	case customAuto:
-        //Put custom auto code here   
+        switch(autoSelected) {
+        case customAuto:
+        //Put custom auto code here
             break;
-    	case defaultAuto:
-    	default:
-    	//Put default auto code here
+        case defaultAuto:
+        default:
+        //Put default auto code here
             break;
-    	}
-    	Scheduler.getInstance().run();
+        }
+        Scheduler.getInstance().run();
     }
 
     /**
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-    	myRobot.tankDrive(leftStick, rightStick); //two joystick tank drive system
-    	launcher.manualShoot(shootStick); //uses throttle on both joysticks to control shooting system
-    	launcher.load(shootStick, 1.0, 0.5); //uses buttons 5 and 3 on right joystick to run loading motor
-    	launcher.testTurn(shootStick);
-    	climber.climb(shootStick);
-    	//System.out.println("POT " + (pot.get())); //for4 testing purposes
-    	//System.out.println(ultrasanic.getRangeInches());
+        myRobot.tankDrive(leftStick, rightStick); //two joystick tank drive system
+        launcher.manualShoot(shootStick); //uses throttle on both joysticks to control shooting system
+        launcher.load(shootStick, 1.0, 0.5); //uses buttons 5 and 3 on right joystick to run loading motor
+        launcher.manualTurn(shootStick);
+        climber.climb(shootStick);
+        //System.out.println("POT " + (pot.get())); //for4 testing purposes
+        //System.out.println(ultrasanic.getRangeInches());
     }
-    
+
     /**
      * This function is called periodically during test mode
      */
     public void testPeriodic() {
-    
+
     }
     protected void finalize() throws Throwable {
-    	try{
-    		CameraRunnable.killCameraThread = true;
-    		Thread.currentThread().join(CameraRunnable.sleepTimeMillisecond + 1000);
-    	}
-    	catch(Throwable t)
-    	{
-    		throw t;
-    	}
-    	finally{
-    		super.finalize();
-    	}
-	}
-    
+        try{
+                CameraRunnable.killCameraThread = true;
+                Thread.currentThread().join(CameraRunnable.sleepTimeMillisecond + 1000);
+        }
+        catch(Throwable t)
+        {
+                throw t;
+        }
+        finally{
+                super.finalize();
+        }
+        }
+
 }
 
-/* stuff to work on:
- * - reimplement potentiometer, branch
- * - ultrasonic [canceled]
- * -  number new talons update wiring sheet
- */
-
 /*
- * TO DO FriDAY:
- * - build bumpers
- * - paint bumpers
+ * TO DO WEDNESDAY:
  * - fix driver station
- * - put on talons
- * - camera shit [done]
- * - build turning shooter
- * - ultrasonic testing/code [canceled]
- * 
+ * - camera shit
+ * - set up potentiometer stuff
+ * - test continuous servo
+ * - create methods to use feedback from papas vision
  */
 
 /*
@@ -190,18 +181,3 @@ public class Robot extends IterativeRobot {
  * remount electronics boards
  *
  */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

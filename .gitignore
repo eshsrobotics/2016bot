@@ -78,3 +78,12 @@ local.properties
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# -----------------------------------------
+# Custom ignore patterns for our FRC robot.
+# -----------------------------------------
+# Having these helps to prevent "both modified" merge conflicts in our
+# branches.
+
+superawesomerobot2k16/build/**/*.class
+superawesomerobot2k16/dist/**/*.jar
