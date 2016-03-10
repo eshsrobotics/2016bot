@@ -79,13 +79,13 @@ public class Robot extends IterativeRobot {
         myRobot = new RobotDrive(canTalon0, canTalon1, canTalon2, canTalon3);
         
         //load talon port (cantalon), lower shoot talon port(cantalon), upper shoot talon port(cantalon)
-        launcher = new Launcher(4,5,6);
+        launcher = new Launcher(8,5,6);
         leftStick = new Joystick(0);
         rightStick = new Joystick(1);
         shootStick = new Joystick(2);
         
         //talonPortActuator1 (cantalon) ,talonPortActuator2 (cantalon),lowerlimitswitch1port, lowerlimitswitch2port, upperlimitswitch1port, upperlimitswitch2port
-        climber = new Climber(7,8,0,1,0,1);
+        climber = new Climber(7,4,0,1);
         
         autoCom = new AutoCom(myRobot, launcher);
         

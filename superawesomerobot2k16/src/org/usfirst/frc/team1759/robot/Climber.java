@@ -8,14 +8,14 @@ import edu.wpi.first.wpilibj.DigitalInput;
 public class Climber {
 	 private CANTalon talonActuator1, talonActuator2;
 	 private DigitalInput lowerLimit1, lowerLimit2;
-	 private AnalogPotentiometer actuator1Potentiometer, actuator2Potentiometer;
-     public Climber(int talonPortActuator1, int talonPortActuator2, int lls1port, int lls2port,int actuator1PotentiometerPort, int actuator2PotentiometerPort){
+	 //private AnalogPotentiometer actuator1Potentiometer, actuator2Potentiometer;
+     public Climber(int talonPortActuator1, int talonPortActuator2, int lls1port, int lls2port){
     	 talonActuator1 = new CANTalon(talonPortActuator1);
     	 talonActuator2 = new CANTalon(talonPortActuator2);
     	 lowerLimit1 = new DigitalInput(lls1port);
     	 lowerLimit2 = new DigitalInput(lls2port);
-    	 actuator1Potentiometer = new AnalogPotentiometer(actuator1PotentiometerPort);
-    	 actuator2Potentiometer = new AnalogPotentiometer(actuator1PotentiometerPort);
+    	 //actuator1Potentiometer = new AnalogPotentiometer(actuator1PotentiometerPort);
+    	 //actuator2Potentiometer = new AnalogPotentiometer(actuator1PotentiometerPort);
      }
      
      public void climb(Joystick joystick){ // double max1, double max2, double min1, double min2
@@ -62,10 +62,10 @@ public class Climber {
     	 }
      }
      
-     public void testPot(){
+     /*public void testPot(){
     	 System.out.println("actuator one val: " + actuator1Potentiometer.get());
     	 System.out.println("actuator two val: " + actuator2Potentiometer.get());
-     }
+     }*/
      
      //for reimplementation of potentiometers if necessary
      /*public void checkError(double error){
