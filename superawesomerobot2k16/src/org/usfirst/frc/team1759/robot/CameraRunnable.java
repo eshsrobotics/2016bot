@@ -21,6 +21,7 @@ public class CameraRunnable implements Runnable {
 	 * Any target goal that is greater than this distance will be rejected by
 	 * findgoal().
 	 */
+	
 	public static double goalRejectionThresholdInches = 180;
 	// When set to true the camerathread will kill itself.
 	public static boolean killCameraThread = false;
@@ -61,9 +62,9 @@ public class CameraRunnable implements Runnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-
-		PapasVision papasVision = new PapasVision(goalRejectionThresholdInches, false);
+		
 		int i = 1;
+		PapasVision papasVision = new PapasVision(goalRejectionThresholdInches, false);
 		while (killCameraThread == false) {
 			try {
 				java.lang.Thread.sleep(sleepTimeMillisecond);
@@ -84,5 +85,10 @@ public class CameraRunnable implements Runnable {
 
 		// As soon as control makes it here, R.I.P.
 		System.out.println(Thread.currentThread().getName() + ": I have just been informed that is is my time to die.");
+	}
+	
+	public void die()
+	{
+		killCameraThread = true;
 	}
 }

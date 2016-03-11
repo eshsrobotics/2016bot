@@ -42,7 +42,7 @@ public class PapasVision {
 	final static double REAL_TAPE_HEIGHT = 12; // inches of real tape height
 	final static double IMG_HEIGHT = 480; // pixels of image resolution
 	final static double IMG_WIDTH = 640; // pixels of image resolution
-	final static double CAM_EL_DEG = 15.0;
+	final static double CAM_EL_DEG = 45;
 	final static double CAM_EL_RAD = Math.toRadians(CAM_EL_DEG);
 
 	VideoCapture camera;
@@ -66,15 +66,14 @@ public class PapasVision {
 
 	public PapasVision(double goalRejectionThresholdInches, boolean writeIntermediateFilesToDisk) {
 		System.load("/usr/local/share/OpenCV/java/libopencv_java310.so");
-		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		System.out.println("Welcome to OpenCV " + Core.VERSION);
 		camera = new VideoCapture(0);
 		// camera.open(1);
-		camera.set(Videoio.CAP_PROP_EXPOSURE, -9);
+		/*camera.set(Videoio.CAP_PROP_EXPOSURE, -9);
 		camera.set(Videoio.CAP_PROP_BRIGHTNESS, 30);
 		camera.set(Videoio.CAP_PROP_IOS_DEVICE_WHITEBALANCE, 4745);
 		camera.set(Videoio.CAP_PROP_SATURATION, 200);
-		camera.set(Videoio.CAP_PROP_CONTRAST, 10);
+		camera.set(Videoio.CAP_PROP_CONTRAST, 10);*/
 		this.goalRejectionThresholdInches = goalRejectionThresholdInches;
 		this.writeIntermediateFilesToDisk = writeIntermediateFilesToDisk;
 		// Mat m = new Mat(5, 10, CvType.CV_8UC1, new Scalar(0));
