@@ -44,7 +44,7 @@ public class Robot extends IterativeRobot {
     CommandGroup autoCom;
     
     Ultrasonic ultrasanic;
-    //CameraServer server;
+    CameraServer server;
     
     //AnalogPotentiometer pot; //for testing purposes
     /**
@@ -53,9 +53,9 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
     	//enable the camera
-    	/*server = CameraServer.getInstance();
+    	server = CameraServer.getInstance();
         server.setQuality(100);
-        server.startAutomaticCapture("cam0");*/
+        server.startAutomaticCapture("cam0");
     	
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", defaultAuto);

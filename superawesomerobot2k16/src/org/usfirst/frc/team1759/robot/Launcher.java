@@ -58,7 +58,7 @@ public class Launcher {
 	
 	public void shoot(double lowerWheel, double upperWheel){
 		lowerShootTalon.set((Math.abs(lowerWheel))*-1.0); //makes sure lower wheel value is always negative
-		upperShootTalon.set(upperWheel);
+		upperShootTalon.set((Math.abs(upperWheel))*-1.0);
 	}
 	
 	public void autoShoot(double papasVisionDistance, double error){
