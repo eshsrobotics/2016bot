@@ -18,7 +18,7 @@ public class DriveCom extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	myRobot.tankDrive(-0.75,-1.0); //used to be 0.75,0.75.. changed due to test robot testing but may need to switch back with normal robot
+    	myRobot.tankDrive(-1.0,-1.0); //used to be 0.75,0.75.. changed due to test robot testing but may need to switch back with normal robot
     }
 
     // Make this return true when this Command no longer needs to run execute()

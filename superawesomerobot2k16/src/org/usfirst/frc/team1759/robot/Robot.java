@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Command; //uncomment for autonomous
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.CameraServer;
@@ -32,7 +32,7 @@ public class Robot extends IterativeRobot {
 	
     RobotDrive myRobot;
     Launcher launcher;
-    Climber climber;
+    //Climber climber; //uncomment for climbing
     Joystick leftStick;
     Joystick rightStick;
     Joystick shootStick;
@@ -41,9 +41,8 @@ public class Robot extends IterativeRobot {
     CANTalon canTalon2;
     CANTalon canTalon3;
     
-    CommandGroup autoCom;
-    
-    Ultrasonic ultrasanic;
+    CommandGroup autoCom; //uncomment for autonomous
+    //auto -- 60% for 5 seconds
     CameraServer server;
     
     //AnalogPotentiometer pot; //for testing purposes
@@ -65,15 +64,13 @@ public class Robot extends IterativeRobot {
         canTalon0 = new CANTalon(0); 
     	canTalon1 = new CANTalon(1);
     	canTalon2 = new CANTalon(2);
-    	canTalon3 = new CANTalon(3);
+    	canTalon3 = new CANTalon(7);
     	
     	//output for talons was reversed so this inverts them
     	canTalon0.setInverted(true);
-    	canTalon1.setInverted(true);
+    	//canTalon1.setInverted(true);
     	canTalon2.setInverted(true);
     	canTalon3.setInverted(true);
-    	
-    	ultrasanic = new Ultrasonic(5,4);
     	
     	//front left, back left, front right, back right
         myRobot = new RobotDrive(canTalon0, canTalon1, canTalon2, canTalon3);
@@ -85,9 +82,9 @@ public class Robot extends IterativeRobot {
         shootStick = new Joystick(2);
         
         //talonPortActuator1 (cantalon) ,talonPortActuator2 (cantalon),lowerlimitswitch1port, lowerlimitswitch2port, upperlimitswitch1port, upperlimitswitch2port
-        climber = new Climber(7,4,0,1);
+        //climber = new Climber(7,4,0,1); //uncomment for climbing
         
-        autoCom = new AutoCom(myRobot, launcher);
+        autoCom = new AutoCom(myRobot, launcher); //uncomment for autonomous
         
         //pot = new AnalogPotentiometer(3); //for testing purposes
     }
@@ -105,7 +102,7 @@ public class Robot extends IterativeRobot {
     	autoSelected = (String) chooser.getSelected();
 //		autoSelected = SmartDashboard.getString("Auto Selector", defaultAuto);
 		System.out.println("Auto selected: " + autoSelected);
-		autoCom.start();
+		autoCom.start(); //uncomment to use autonomous
     }
 
     /**
@@ -121,7 +118,7 @@ public class Robot extends IterativeRobot {
     	//Put default auto code here
             break;
     	}
-    	Scheduler.getInstance().run();
+    	Scheduler.getInstance().run(); //uncomment to use autonomous
     }
 
     /**
@@ -132,7 +129,7 @@ public class Robot extends IterativeRobot {
     	launcher.manualShoot(shootStick); //uses throttle on both joysticks to control shooting system
     	launcher.load(shootStick, 1.0, 0.5); //uses buttons 5 and 3 on right joystick to run loading motor
     	launcher.manualTurn(shootStick);
-    	climber.climb(shootStick);
+    	//climber.climb(shootStick); //uncomment for climbing
     	//System.out.println("POT " + (pot.get())); //for4 testing purposes
     	//System.out.println(ultrasanic.getRangeInches());
     }
@@ -161,6 +158,16 @@ public class Robot extends IterativeRobot {
  * put on camera
  * remount electronics boards
  *
+ */
+
+/*
+ * shit to do
+ * - test all manual controls
+ * - switch loading back to full power talon
+ * - get camera images on
+ * - test and practice w autonomous
+ *  
+ * 
  */
 
 

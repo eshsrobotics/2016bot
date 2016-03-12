@@ -24,6 +24,6 @@ public class AutoCom extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new DriveCom(myRobot,1.0)); //figuredis shit out
+    	addSequential(new DriveCom(myRobot, 6.0)); //figuredis shit out
     }
 }

@@ -45,14 +45,38 @@ public class Launcher {
 	public void manualShoot(Joystick joyStick){
 		if (joyStick.getRawButton(11)){ //shooting from the base of the tower
 			shoot(1.0, 1.0);
+			Timer.delay(1.0);
+			loadTalon.set(1.0);
+			Timer.delay(0.5);
 			System.out.println("shoot full speed (bottom of tower)");
 		}
 		else if(joyStick.getRawButton(12)){ //shooting from green line
 			shoot(1.0, 0.75);
 			System.out.println("shoot lower speed (green line)");
 		}
+		else if (joyStick.getRawButton(9)){
+			lowerShootTalon.set(1.0);
+		}
+		else if (joyStick.getRawButton(10)){
+			lowerShootTalon.set(1.0);
+			Timer.delay(0.5);
+			loadTalon.set(-0.5);
+			Timer.delay(0.3);
+		}
+		else if (joyStick.getRawButton(7)){
+			lowerShootTalon.set(1.0);
+			Timer.delay(0.5);
+			loadTalon.set(-0.5);
+			Timer.delay(0.2);
+			loadTalon.set(0.0);
+			shoot(1.0, 1.0);
+			Timer.delay(1.0);
+			loadTalon.set(1.0);
+			Timer.delay(0.5);
+		}
 		else {
 			shoot(0.0, 0.0);
+			loadTalon.set(0.0);
 		}
 	}
 	
@@ -127,14 +151,11 @@ public class Launcher {
 			spinTalon.set(1.0);
 		else if (joyStick.getPOV()==(270))
 			spinTalon.set(-1.0);
-		
-		else if (joyStick.getTrigger()){
-			spinTalon.set(1.0);
-			Timer.delay(0.5);
-			spinTalon.set(0.0);
-		}
-		
-		
+		//else if (joyStick.getTrigger()){
+			//spinTalon.set(1.0);
+			//Timer.delay(0.5);
+			//spinTalon.set(0.0);
+		//}	
 		else
 			spinTalon.set(0.0);
 	}
