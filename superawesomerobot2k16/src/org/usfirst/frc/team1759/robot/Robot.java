@@ -41,6 +41,8 @@ public class Robot extends IterativeRobot {
 	CANTalon canTalon1;
 	CANTalon canTalon2;
 	CANTalon canTalon3;
+	CANTalon canTalon4;
+	CANTalon canTalon7;
 
 	Thread cameraThread;
 	CameraRunnable runnable;
@@ -72,28 +74,32 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("My Auto", customAuto);
 		SmartDashboard.putData("Auto choices", chooser);
 
-		canTalon0 = new CANTalon(0);
+		canTalon0 = new CANTalon(0);//not used
 		canTalon1 = new CANTalon(1);
-		canTalon2 = new CANTalon(2);
-		canTalon3 = new CANTalon(3);
+		canTalon2 = new CANTalon(2);//Back left
+		canTalon3 = new CANTalon(3);//Front Right
+		canTalon4 = new CANTalon(4);//Back right
+		canTalon7 = new CANTalon(7);//Front left
 
 		// output for talons was reversed so this inverts them
-		canTalon0.setInverted(true);
-		canTalon1.setInverted(true);
-		canTalon2.setInverted(true);
-		canTalon3.setInverted(true);
+		canTalon0.setInverted(false);
+		canTalon1.setInverted(false);
+		canTalon2.setInverted(false);
+		canTalon3.setInverted(false);
+		canTalon4.setInverted(false);
+		canTalon7.setInverted(false);
 
 		camOn = false;
 
 		// front left, back left, front right, back right
-		myRobot = new RobotDrive(canTalon0, canTalon1, canTalon2, canTalon3);
+		myRobot = new RobotDrive(canTalon7, canTalon2, canTalon1, canTalon3);
 
 		// load talon port (cantalon), lower shoot talon port(cantalon), upper
 		// shoot talon port(cantalon)
 		launcher = new Launcher(8, 5, 6);
 		leftStick = new Joystick(0);
-		rightStick = new Joystick(1);
-		shootStick = new Joystick(2);
+		rightStick = new Joystick(2);
+		shootStick = new Joystick(1);
 
 		// talonPortActuator1 (cantalon) ,talonPortActuator2
 		// (cantalon),lowerlimitswitch1port, lowerlimitswitch2port,
