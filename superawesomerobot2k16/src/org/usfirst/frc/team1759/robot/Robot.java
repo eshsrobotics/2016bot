@@ -150,7 +150,8 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-		myRobot.tankDrive(leftStick, rightStick); // two joystick tank drive
+		myRobot.tankDrive(leftStick, rightStick);// two joystick tank drive
+		myRobot.setMaxOutput(0.5);
 		// system
 		launcher.manualShoot(shootStick); // uses throttle on both joysticks to
 		// control shooting system
