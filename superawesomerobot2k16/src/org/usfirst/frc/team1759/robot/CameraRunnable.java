@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.usfirst.frc.team1759.robot;
 
 import org.usfirst.frc.team1759.robot.PapasVision;

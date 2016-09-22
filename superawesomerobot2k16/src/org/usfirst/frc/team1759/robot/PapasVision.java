@@ -21,6 +21,10 @@ import org.opencv.videoio.Videoio;
 
 //Thank you to the morotorq (1515) team for letting us modify the code and use it
 
+
+/**
+ * @author Ari Berkowicz
+ */
 public class PapasVision {
 	/*
 	 * final static double HORIZ_FOV_DEG = 59.253; final static double
